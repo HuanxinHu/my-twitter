@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Craig Dearell",
+    "email": "cdearell0@europa.eu",
+    "gender": "Male",
+    "password": 123456,
+    "following": [],
+    "followers": []
+  },
+  {
+    "name": "Laura Caulder",
+    "email": "lcaulder@biblegateway.com",
+    "gender": "Female",
+    "password": 123456,
+    "following": [],
+    "followers": []
+  },
+  {
+    "name": "Errol Ygou",
+    "email": "eygou3@dmoz.org",
+    "gender": "Male",
+    "password": 123456,
+    "following": [],
+    "followers": []
+  },
+  {
+    "name": "Theodor Bettis",
+    "email": "tbettis4@youtube.com",
+    "gender": "Male",
+    "password": 123456,
+    "following": [],
+    "followers": []
+  },
+  {
+    "name": "Fergus Gibbins",
+    "email": "fgibbins5@sfgate.com",
+    "gender": "Male",
+    "password": 123456,
+    "following": [],
+    "followers": []
+  },
+  {
+    "name": "Lana Gilhooley",
+    "email": "lgilhooley6@abc.net.au",
+    "gender": "Female",
+    "password": 123456,
+    "following": [],
+    "followers": []
+  },
+  {
+    "name": "Darcee Spellar",
+    "email": "dspellar7@sphinn.com",
+    "gender": "Female",
+    "password": 123456,
+    "following": [],
+    "followers": []
+  },
+  {
+    "name": "Del Dibden",
+    "email": "ddibden8@xinhuanet.com",
+    "gender": "Female",
+    "password": 123456,
+    "following": [],
+    "followers": []
+  },
+  {
+    "name": "Cati Evesque",
+    "email": "cevesque9@reddit.com",
+    "gender": "Female",
+    "password": 123456,
+    "following": [],
+    "followers": []
+  }
+]
