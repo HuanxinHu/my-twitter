@@ -1,6 +1,5 @@
 const asyncHandler = require('../middleware/asyncHandler');
 const ErrorResponse = require('../utils/errorResponse');
-
 const User = require('../models/User');
 
 exports.getUsers = asyncHandler(async (req, res, next) => {
@@ -19,7 +18,7 @@ exports.getUser = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: user });
 });
 
-exports.createUser = asyncHandler(async (req, res, next) => {
-  const user = await User.create(req.body);
-  res.status(201).json({ success: true, data: user });
-});
+// exports.createUser = asyncHandler(async (req, res, next) => {
+//   const user = await User.create(req.body);
+//   res.status(201).json({ success: true, data: user });
+// });
