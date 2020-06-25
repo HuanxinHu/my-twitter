@@ -2,61 +2,63 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'Please add a name'],
+const UserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'Please add a name'],
+    },
+    email: {
+      type: String,
+      required: [true, 'Please add an email'],
+      unique: true,
+      match: [
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        'Please add a valid email',
+      ],
+    },
+    gender: {
+      type: String,
+      required: [true, 'Please add a gender'],
+      enum: ['male', 'female', 'Male', 'Female'],
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user',
+    },
+    password: {
+      type: String,
+      required: [true, 'Please add a password'],
+      minlength: 6,
+      select: false, // select false means this column will not select by model.findByXXX
+    },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    following: {
+      type: [mongoose.Schema.ObjectId],
+      ref: 'User',
+    },
+    followers: {
+      type: [mongoose.Schema.ObjectId],
+      ref: 'User',
+    },
   },
-  email: {
-    type: String,
-    required: [true, 'Please add an email'],
-    unique: true,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      'Please add a valid email',
-    ],
-  },
-  gender: {
-    type: String,
-    required: [true, 'Please add a gender'],
-    enum: ['male', 'female', 'Male', 'Female'],
-  },
-  role: {
-    type: String,
-    enum: ['user', 'admin'],
-    default: 'user',
-  },
-  password: {
-    type: String,
-    required: [true, 'Please add a password'],
-    minlength: 6,
-    select: false, // select false means this column will not select by model.findByXXX
-  },
-  resetPasswordToken: String,
-  resetPasswordExpire: Date,
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  blogs: {
-    type: [
-      {
-        type: String,
-        createdAt: {
-          type: Date,
-          default: Date.now,
-        },
-      },
-    ],
-  },
-  following: {
-    type: [mongoose.Schema.ObjectId],
-    ref: 'User',
-  },
-  followers: {
-    type: [mongoose.Schema.ObjectId],
-    ref: 'User',
-  },
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
+
+UserSchema.virtual('blogs', {
+  ref: 'Blog',
+  localField: '_id',
+  foreignField: 'createdBy',
+  justOne: false,
 });
 
 UserSchema.pre('save', async function (next) {
