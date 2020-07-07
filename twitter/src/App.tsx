@@ -1,10 +1,13 @@
-import React, { FC } from 'react';
-import { Button } from 'antd';
-import './App.less';
+import React, { FC } from "react";
+import Routes from "Routes";
+import { BrowserRouter as Router } from "react-router-dom";
+import "./App.less";
 
 const App: FC = () => (
   <div className="App">
-    <Button type="primary">Button</Button>
+    <Router>
+      <Routes />
+    </Router>
   </div>
 );
 
