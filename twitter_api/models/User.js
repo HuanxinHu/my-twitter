@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'Please add a name'],
+      // required: [true, 'Please add a name'],
     },
     email: {
       type: String,
@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      required: [true, 'Please add a gender'],
+      // required: [true, 'Please add a gender'],
       enum: ['male', 'female', 'Male', 'Female'],
     },
     role: {
