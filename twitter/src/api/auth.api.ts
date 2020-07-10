@@ -10,7 +10,7 @@ function login(userData: { email: string; password: string }) {
   });
 }
 
-function register(userData: { email: string; password: string }) {
+function register(userData: { name: string; email: string; password: string }) {
   return fetchWrap({
     method: 'post',
     url: `${resource}/register`,
@@ -18,7 +18,14 @@ function register(userData: { email: string; password: string }) {
   });
 }
 
+function getMe() {
+  return fetchWrap({
+    url: `${resource}/me`,
+  });
+}
+
 export default {
   login,
   register,
+  getMe,
 };

@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import Login from "pages/Login/Login";
 import Register from "pages/Register/Register";
 import Feeds from "pages/Feeds/Feeds";
+import Profile from "pages/Profile/Profile";
 
 const Routes: React.FC = (props) => (
   <Switch>
@@ -12,7 +13,10 @@ const Routes: React.FC = (props) => (
     <Route exact path="/register">
       <Register />
     </Route>
-    <Route exact path="/">
+    <Route exact path="/profile">
+      <Profile />
+    </Route>
+    <Route path="/">
       <Feeds />
     </Route>
   </Switch>

@@ -9,8 +9,8 @@ export interface IProps extends RouteComponentProps {}
 
 const Register: React.FC<IProps> = (props) => {
   const onFinish = (values: any) => {
-    const { email, password } = values;
-    api.register({ email, password }).then((res) => {
+    const { email, password, name } = values;
+    api.register({ email, password, name }).then((res) => {
       props.history.push("/");
     });
   };
@@ -22,6 +22,13 @@ const Register: React.FC<IProps> = (props) => {
       </div>
       <div styleName="title">Register to My Twitter</div>
       <Form name="basic" layout="vertical" onFinish={onFinish}>
+        <Form.Item
+          name="name"
+          rules={[{ required: true, message: "Please input your user name!" }]}
+        >
+          <Input placeholder="Username" />
+        </Form.Item>
+
         <Form.Item
           name="email"
           rules={[
