@@ -2,7 +2,7 @@ import React from "react";
 import "./Register.module.less";
 import { Form, Input, Button } from "antd";
 import logo from "assets/images/logo.png";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import api from "api";
 
 export interface IProps extends RouteComponentProps {}
@@ -69,6 +69,12 @@ const Register: React.FC<IProps> = (props) => {
           </Button>
         </Form.Item>
       </Form>
+      <div>
+        Have an account?
+        <Link styleName="login-link" to="/login">
+          Login
+        </Link>
+      </div>
     </div>
   );
 };
