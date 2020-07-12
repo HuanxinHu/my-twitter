@@ -2,16 +2,18 @@ import React from "react";
 import "./Register.module.less";
 import { Form, Input, Button } from "antd";
 import logo from "assets/images/logo.png";
-import { Link, withRouter, RouteComponentProps } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import api from "api";
 
-export interface IProps extends RouteComponentProps {}
+export interface IProps {}
 
 const Register: React.FC<IProps> = (props) => {
+  const history = useHistory();
+
   const onFinish = (values: any) => {
     const { email, password, name } = values;
     api.register({ email, password, name }).then((res) => {
-      props.history.push("/");
+      history.push("/");
     });
   };
 
@@ -86,4 +88,4 @@ const Register: React.FC<IProps> = (props) => {
   );
 };
 
-export default withRouter(Register);
+export default Register;

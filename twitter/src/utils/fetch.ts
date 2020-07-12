@@ -1,6 +1,5 @@
-import { message } from 'antd';
+import { Modal, message } from 'antd';
 import axios from 'axios';
-import { getCookie } from './util';
 
 const fetchWrap = (config = {}) => {
   return axios({
@@ -13,8 +12,25 @@ const fetchWrap = (config = {}) => {
     ...config,
   }).catch((err) => {
     message.error(err.response.data.error);
+    console.log(err.response.status);
+    if (err.response.status === 401) {
+      handle401();
+    }
     throw err;
   });
 };
 
+const handle401 = (() => {
+  let modalOpened = false;
+  return () => {
+    if (!modalOpened) {
+      Modal.error({
+        title: 'Token Expire, Please login again!',
+        onOk: () => {
+          window.location.href = '/login';
+        },
+      });
+    }
+  };
+})();
 export default fetchWrap;
