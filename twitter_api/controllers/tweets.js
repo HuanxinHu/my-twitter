@@ -1,16 +1,16 @@
 const asyncHandler = require('../middleware/asyncHandler');
 const ErrorResponse = require('../utils/errorResponse');
 const User = require('../models/User');
-const Blog = require('../models/Blog');
+const Tweet = require('../models/Tweet');
 
-exports.createBlog = asyncHandler(async (req, res, next) => {
+exports.createTweet = asyncHandler(async (req, res, next) => {
   const { content } = req.body;
   const userId = req.params.userId;
 
   if (userId !== req.user.id) {
     return next(
       new ErrorResponse(
-        `Current user ${req.user.id} is not authorized to create blog with user id ${userId}`,
+        `Current user ${req.user.id} is not authorized to create tweet with user id ${userId}`,
         404
       )
     );
@@ -22,6 +22,6 @@ exports.createBlog = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`User not found with id of ${userId}`, 404));
   }
 
-  const blog = await Blog.create({ content, createdBy: userId });
-  res.status(201).json({ success: true, data: blog });
+  const tweet = await Tweet.create({ content, createdBy: userId });
+  res.status(201).json({ success: true, data: tweet });
 });

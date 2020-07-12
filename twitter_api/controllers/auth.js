@@ -78,7 +78,7 @@ exports.forgetPassword = asyncHandler(async (req, res, next) => {
 });
 
 exports.getMe = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id).populate('blogs');
+  const user = await User.findById(req.user.id).populate('tweetsCount');
   res.status(200).json({
     success: true,
     data: user,

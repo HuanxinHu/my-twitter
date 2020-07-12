@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { getUsers, getUser } = require('../controllers/users');
-const blogsRouter = require('./blogs');
+const tweetsRouter = require('./tweets');
 
-router.use('/:userId/blogs', blogsRouter);
+router.use('/:userId/tweets', tweetsRouter);
 
 router.route('/').get(getUsers);
 

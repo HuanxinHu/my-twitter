@@ -9,7 +9,7 @@ interface IProps {
 }
 
 const Page: React.FC<IProps> = (props) => {
-  const { noSider, loading } = props;
+  const { noSider, loading = false } = props;
   return (
     <div styleName="container">
       <div styleName="menu">{!noSider && <Sidebar />}</div>

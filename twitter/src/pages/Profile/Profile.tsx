@@ -34,6 +34,17 @@ const Profile: React.FC<IProps> = () => {
         <CalendarOutlined /> Joined{" "}
         {new Date(user.createdAt).toLocaleDateString()}
       </div>
+      <div>
+        <span styleName="brief-info">
+          <span styleName="number">{user.tweetsCount}</span> Tweets
+        </span>
+        <span styleName="brief-info">
+          <span styleName="number">{user.tweetsCount}</span> Followers
+        </span>
+        <span styleName="brief-info">
+          <span styleName="number">{user.tweetsCount}</span> Following
+        </span>
+      </div>
     </Page>
   );
 };

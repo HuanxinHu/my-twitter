@@ -55,11 +55,18 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-UserSchema.virtual('blogs', {
-  ref: 'Blog',
+UserSchema.virtual('tweets', {
+  ref: 'Tweet',
   localField: '_id',
   foreignField: 'createdBy',
   justOne: false,
+});
+
+UserSchema.virtual('tweetsCount', {
+  ref: 'Tweet',
+  localField: '_id',
+  foreignField: 'createdBy',
+  count: true,
 });
 
 UserSchema.pre('save', async function (next) {

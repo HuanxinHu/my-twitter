@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const BlogSchema = new mongoose.Schema({
+const TweetSchema = new mongoose.Schema({
   createdBy: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
@@ -32,4 +32,4 @@ const BlogSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Blog', BlogSchema);
+module.exports = mongoose.model('Tweet', TweetSchema);
