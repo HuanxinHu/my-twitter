@@ -6,6 +6,13 @@
   margin: 12px 0;
 }
 
+.name,
+.join-date,
+.brief {
+  margin-bottom: 6px;
+  position: relative;
+}
+
 .name {
   font-size: 16px;
   font-weight: 600;
@@ -16,6 +23,17 @@
 
   .number {
     color: #fff;
-    font-weight: bolde;
+    font-weight: bold;
   }
+}
+
+.edit-profile-btn {
+  &:global(.ant-btn) {
+    position: absolute;
+    color: rgba(29, 161, 242, 1);
+    border-color: rgba(29, 161, 242, 1);
+    font-weight: bolder;
+  }
+
+  right: 0;
 }

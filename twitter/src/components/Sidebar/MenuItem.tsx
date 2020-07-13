@@ -10,7 +10,6 @@ interface IProps {
 }
 
 const MenuItem: React.FC<IProps> = (props) => {
-  const Icon = props.icon;
   const history = useHistory();
   const handleClick = () => history.push(props.path);
 

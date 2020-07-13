@@ -1,6 +1,7 @@
 import styles from "./Sidebar.module.less";
 
-import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { HomeOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 import React, { Fragment } from "react";
 import logo from "assets/images/logo.png";
 import MenuItem from "./MenuItem";
@@ -28,6 +29,15 @@ const Sidebar: React.FC = () => {
           <MenuItem key={item.title} {...item} />
         ))}
       </Fragment>
+      <Button type="primary" styleName="twt-btn" shape="round">
+        Tweet
+      </Button>
+      <Button
+        type="primary"
+        styleName="twt-btn-circle"
+        shape="circle"
+        icon={<PlusOutlined />}
+      />
     </div>
   );
 };
