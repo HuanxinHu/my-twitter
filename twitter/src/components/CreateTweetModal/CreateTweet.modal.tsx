@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Modal, Input, Button } from "antd";
-import styles from "./CreateTweet.module.less";
-import { useSelector } from "store";
-import api from "api";
+import React, { useState } from 'react';
+import { Modal, Input, Button } from 'antd';
+import styles from './CreateTweet.module.less';
+import { useSelector } from 'store';
+import api from 'api';
 
 interface IProps {
   afterClose: Function;
@@ -10,7 +10,7 @@ interface IProps {
 
 const CreateTweetModal: React.FC<IProps> = (props) => {
   const [visible, setVisible] = useState(true);
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
   const user = useSelector((state) => state.user.user);
 
   const handleCancle = () => setVisible(false);
@@ -25,7 +25,7 @@ const CreateTweetModal: React.FC<IProps> = (props) => {
 
   return (
     <Modal
-      className={styles["create-tweet"]}
+      className={styles['create-tweet']}
       visible={visible}
       onCancel={handleCancle}
       onOk={handleOk}
