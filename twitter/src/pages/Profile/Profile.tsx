@@ -1,11 +1,9 @@
 import './Profile.module.less';
 import { CalendarOutlined } from '@ant-design/icons';
 import { Button, Tabs } from 'antd';
-import React, { useEffect, useState } from 'react';
-import api from 'api';
+import React, { useEffect } from 'react';
 import Page from 'components/Page';
 import Tweet from 'components/Tweet';
-import { User } from 'utils/types/user.types';
 import { useDispatch } from 'react-redux';
 import { getTweetsByUserId } from 'redux/User/user.actions';
 import { useSelector } from 'store';
@@ -18,7 +16,7 @@ const Profile: React.FC = () => {
   const { tweets = [], followers = [], following = [] } = user;
   useEffect(() => {
     dispatch(getTweetsByUserId());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Page>
