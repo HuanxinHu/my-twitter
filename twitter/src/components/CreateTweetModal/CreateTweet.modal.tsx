@@ -31,7 +31,7 @@ const CreateTweetModal: React.FC<IProps> = (props) => {
       onOk={handleOk}
       afterClose={() => props.afterClose()}
       footer={[
-        <Button type="primary" shape="round" onClick={handleTweet}>
+        <Button key="ok" type="primary" shape="round" onClick={handleTweet}>
           Tweet
         </Button>,
       ]}
