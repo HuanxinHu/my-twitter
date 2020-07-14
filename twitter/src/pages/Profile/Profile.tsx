@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import Page from 'components/Page';
 import Tweet from 'components/Tweet';
 import { useDispatch } from 'react-redux';
-import { getTweetsByUserId } from 'redux/User/user.actions';
+import { getTweetsByMe } from 'redux/User/user.actions';
 import { useSelector } from 'store';
 
 const { TabPane } = Tabs;
@@ -15,7 +15,7 @@ const Profile: React.FC = () => {
   const user = useSelector((state) => state.user.user);
   const { tweets = [], followers = [], following = [] } = user;
   useEffect(() => {
-    dispatch(getTweetsByUserId());
+    dispatch(getTweetsByMe());
   }, [dispatch]);
 
   return (

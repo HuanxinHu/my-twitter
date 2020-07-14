@@ -14,7 +14,7 @@ export const updateUserTweets = createAction('user/updateUser', (tweets) => {
   };
 });
 
-export const getTweetsByUserId = (): AppThunk => (dispatch, getState: () => RootState) => {
+export const getTweetsByMe = (): AppThunk => (dispatch, getState: () => RootState) => {
   api.getTweetsByUserId(getState().user.user.id).then((res) => {
     const tweets = res.data.data;
     dispatch(updateUserTweets(tweets));
