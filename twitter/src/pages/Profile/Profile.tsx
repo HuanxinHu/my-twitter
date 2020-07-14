@@ -1,39 +1,31 @@
-import "./Profile.module.less";
-import { CalendarOutlined } from "@ant-design/icons";
-import { Button, Tabs } from "antd";
-import React, { useEffect, useState } from "react";
-import api from "api";
-import Page from "components/Page";
-import Tweet from "components/Tweet";
-import { User } from "utils/types/user.types";
+import './Profile.module.less';
+import { CalendarOutlined } from '@ant-design/icons';
+import { Button, Tabs } from 'antd';
+import React, { useEffect, useState } from 'react';
+import api from 'api';
+import Page from 'components/Page';
+import Tweet from 'components/Tweet';
+import { User } from 'utils/types/user.types';
+import { useDispatch } from 'react-redux';
+import { getTweetsByUserId } from 'redux/User/user.actions';
+import { useSelector } from 'store';
 
 const { TabPane } = Tabs;
 
 const Profile: React.FC = () => {
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState({} as User);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   const { tweets = [], followers = [], following = [] } = user;
-  const getMe = () => {
-    setLoading(true);
-    api
-      .getMe()
-      .then((res) => setUser(res.data.data))
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
   useEffect(() => {
-    getMe();
+    dispatch(getTweetsByUserId());
   }, []);
 
   return (
-    <Page loading={loading}>
+    <Page>
       <div styleName="avatar"></div>
       <div styleName="name">{user.name}</div>
       <div styleName="join-date">
-        <CalendarOutlined /> Joined{" "}
-        {new Date(user.createdAt).toLocaleDateString()}
+        <CalendarOutlined /> Joined {new Date(user.createdAt).toLocaleDateString()}
       </div>
       <div styleName="brief">
         <span styleName="brief-info">

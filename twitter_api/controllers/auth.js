@@ -78,7 +78,10 @@ exports.forgetPassword = asyncHandler(async (req, res, next) => {
 });
 
 exports.getMe = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id).populate('tweets');
+  const user = await User.findById(req.user.id).populate({
+    path: 'tweets',
+    options: { sort: { createdAt: -1 } },
+  });
   res.status(200).json({
     success: true,
     data: user,

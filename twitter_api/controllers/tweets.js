@@ -25,3 +25,16 @@ exports.createTweet = asyncHandler(async (req, res, next) => {
   const tweet = await Tweet.create({ content, createdBy: userId });
   res.status(201).json({ success: true, data: tweet });
 });
+
+exports.getTweetsByUserId = asyncHandler(async (req, res, next) => {
+  const userId = req.params.userId;
+  const tweets = await Tweet.find({ createdBy: userId }).sort('-createdAt');
+
+  if (!tweets) {
+    return next(
+      new ErrorResponse(`Tweets not found created by user id of ${userId}`, 404)
+    );
+  }
+
+  res.status(201).json({ success: true, data: tweets });
+});

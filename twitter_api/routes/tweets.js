@@ -1,10 +1,10 @@
 const express = require('express');
-const { createTweet } = require('../controllers/tweets');
+const { createTweet, getTweetsByUserId } = require('../controllers/tweets');
 const { protect } = require('../middleware/auth');
 
 // for users router include tweets router, option mergeParams
 const router = express.Router({ mergeParams: true });
 
-router.route('/').post(protect, createTweet);
+router.route('/').post(protect, createTweet).get(getTweetsByUserId);
 
 module.exports = router;

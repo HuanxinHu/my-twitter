@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Modal, Input, Button } from 'antd';
 import styles from './CreateTweet.module.less';
+import { useDispatch } from 'react-redux';
+import { getTweetsByUserId, updateUserTweets } from 'redux/User/user.actions';
 import { useSelector } from 'store';
 import api from 'api';
 
@@ -9,6 +11,7 @@ interface IProps {
 }
 
 const CreateTweetModal: React.FC<IProps> = (props) => {
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(true);
   const [content, setContent] = useState('');
   const user = useSelector((state) => state.user.user);
@@ -20,7 +23,10 @@ const CreateTweetModal: React.FC<IProps> = (props) => {
   };
 
   const handleTweet = () => {
-    api.createTweet(user.id, { content }).then(() => setVisible(false));
+    api.createTweet(user.id, { content }).then(() => {
+      setVisible(false);
+      dispatch(getTweetsByUserId());
+    });
   };
 
   return (

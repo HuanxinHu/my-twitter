@@ -10,6 +10,13 @@ function createTweet(userId: string, tweet: { content: string }) {
   });
 }
 
+function getTweetsByUserId(userId: string) {
+  return fetchWrap({
+    url: resource(userId),
+  });
+}
+
 export default {
   createTweet,
+  getTweetsByUserId,
 };
