@@ -18,7 +18,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Please provide an email and password', 400));
   }
 
-  const user = await User.findOne({ email }).select('+password');
+  let user = await User.findOne({ email }).select('+password');
 
   if (!user) {
     return next(
@@ -78,7 +78,7 @@ exports.forgetPassword = asyncHandler(async (req, res, next) => {
 });
 
 exports.getMe = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id).populate('tweetsCount');
+  const user = await User.findById(req.user.id).populate('tweets');
   res.status(200).json({
     success: true,
     data: user,
@@ -125,5 +125,5 @@ const sendTokenResponse = (user, statusCode, res) => {
   res
     .status(statusCode)
     .cookie('token', token, options)
-    .json({ success: true, token });
+    .json({ success: true, token, user: user.toJSON() });
 };

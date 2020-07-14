@@ -3,15 +3,17 @@ import "./Login.module.less";
 import { Form, Input, Button, Checkbox } from "antd";
 import logo from "assets/images/logo.png";
 import { Link, useHistory } from "react-router-dom";
+import { updateUser } from "redux/User/user.actions";
+import { useDispatch } from "react-redux";
 import api from "api";
 
-export interface IProps {}
-
-const Login: React.FC<IProps> = (props) => {
+const Login: React.FC = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const onFinish = (values: any) => {
     const { email, password } = values;
     api.login({ email, password }).then((res) => {
+      dispatch(updateUser(res.data.user));
       history.push("/");
     });
   };

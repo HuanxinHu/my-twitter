@@ -105,4 +105,13 @@ UserSchema.methods.getResetPasswordToken = function () {
   return restToken;
 };
 
+// when login register get new user, return the user without some model meta data fields
+UserSchema.method('toJSON', function () {
+  const user = { ...this.toObject() };
+  delete user.password;
+  delete user.__v;
+  delete user._id;
+  return user;
+});
+
 module.exports = mongoose.model('User', UserSchema);

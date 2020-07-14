@@ -5,9 +5,7 @@ import logo from "assets/images/logo.png";
 import { Link, useHistory } from "react-router-dom";
 import api from "api";
 
-export interface IProps {}
-
-const Register: React.FC<IProps> = (props) => {
+const Register: React.FC = (props) => {
   const history = useHistory();
 
   const onFinish = (values: any) => {
