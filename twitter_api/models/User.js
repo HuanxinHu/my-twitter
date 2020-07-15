@@ -2,12 +2,17 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const { toJSON } = require('../utils/util');
 
 const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      maxlength: 25,
       // required: [true, 'Please add a name'],
+    },
+    avatar: {
+      type: String,
     },
     email: {
       type: String,
@@ -17,6 +22,16 @@ const UserSchema = new mongoose.Schema(
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         'Please add a valid email',
       ],
+    },
+    bio: {
+      type: String,
+      maxlength: 60,
+    },
+    location: {
+      type: String,
+    },
+    website: {
+      type: String,
     },
     gender: {
       type: String,
@@ -106,12 +121,6 @@ UserSchema.methods.getResetPasswordToken = function () {
 };
 
 // when login register get new user, return the user without some model meta data fields
-UserSchema.method('toJSON', function () {
-  const user = { ...this.toObject() };
-  delete user.password;
-  delete user.__v;
-  delete user._id;
-  return user;
-});
+UserSchema.method('toJSON', toJSON(['password']));
 
 module.exports = mongoose.model('User', UserSchema);

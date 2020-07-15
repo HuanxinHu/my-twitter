@@ -8,7 +8,7 @@ export const updateUser = createAction('user/updateUser', (user) => {
   };
 });
 
-export const updateUserTweets = createAction('user/updateUser', (tweets) => {
+export const updateUserTweets = createAction('user/updateUserTweets', (tweets) => {
   return {
     payload: { tweets },
   };

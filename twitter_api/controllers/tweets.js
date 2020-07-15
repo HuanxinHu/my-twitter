@@ -35,6 +35,19 @@ exports.getTweetsByUserId = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`Tweets not found created by user id of ${userId}`, 404)
     );
   }
+  console.log(tweets[0].transform);
+  res
+    .status(201)
+    .json({ success: true, data: tweets.map((item) => item.toJSON()) });
+});
 
-  res.status(201).json({ success: true, data: tweets });
+exports.getTweetById = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const tweet = await Tweet.findById(id);
+
+  if (!tweet) {
+    return next(new ErrorResponse(`Tweet not found with id of ${id}`, 404));
+  }
+
+  res.status(201).json({ success: true, data: tweet.toJSON() });
 });

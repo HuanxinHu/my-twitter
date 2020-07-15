@@ -12,8 +12,35 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 
   if (!user) {
     return next(
-      new ErrorResponse(`BootCamp not fund with id of ${req.params.id}`, 404)
+      new ErrorResponse(`User not fund with id of ${req.params.id}`, 404)
     );
   }
   res.status(200).json({ success: true, data: user });
+});
+
+exports.updateUserById = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const { avatar, name, bio, location, website } = req.body;
+  const user = await User.findByIdAndUpdate(
+    id,
+    {
+      avatar,
+      name,
+      bio,
+      location,
+      website,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!user) {
+    return next(
+      new ErrorResponse(`User not fund with id of ${req.params.id}`, 404)
+    );
+  }
+
+  res.status(200).json({ success: true, user });
 });

@@ -5,11 +5,15 @@ export interface UserState {
 }
 
 export interface User {
+  name: string;
+  avatar: string;
+  email: string;
+  bio: string;
+  location: string;
+  website: string;
   role: string;
   following: [];
   followers: [];
-  name: string;
-  email: string;
   createdAt: string;
   tweets: ITweet[];
   tweetsCount: number;

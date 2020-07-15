@@ -11,8 +11,8 @@ const defaultState: UserState = {
 export default createReducer<UserState>(defaultState, {
   [updateUser.type]: (state, action) => {
     const { user } = action.payload;
-    state.user = user;
-    Lockr.set('user', user);
+    state.user = { ...state.user, ...user };
+    Lockr.set('user', state.user);
   },
   [updateUserTweets.type]: (state, action) => {
     const { tweets } = action.payload;

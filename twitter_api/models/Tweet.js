@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { toJSON } = require('../utils/util');
 
 const TweetSchema = new mongoose.Schema({
   createdBy: {
@@ -31,5 +32,7 @@ const TweetSchema = new mongoose.Schema({
     ],
   },
 });
+
+TweetSchema.method('toJSON', toJSON());
 
 module.exports = mongoose.model('Tweet', TweetSchema);

@@ -1,5 +1,5 @@
 export interface ITweet {
-  _id: string;
+  id: string;
   content: string;
   createdBy: string;
   createdAt: string;
