@@ -5,6 +5,7 @@ import { Dropdown, Menu, Modal } from 'antd';
 import './Tweet.module.less';
 import Avatar from 'components/Avatar';
 import { useDispatch } from 'react-redux';
+import { tweetTimeParse } from 'utils/util';
 import { getTweetsByMe } from 'redux/User/user.actions';
 import api from 'api';
 
@@ -54,7 +55,7 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, avatar }) => {
       <div>
         <div>
           <span>
-            {userName} · {createDateStr}
+            {userName} · {tweetTimeParse(tweet.createdAt)}
           </span>
           <span style={{ float: 'right' }} styleName="menu-action">
             <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
