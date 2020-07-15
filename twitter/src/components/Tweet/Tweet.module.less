@@ -1,0 +1,24 @@
+.tweet {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  grid-template-rows: auto;
+  border-bottom: 1px solid #38444d;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+}
+
+.tweet-content {
+  margin: 6px 0;
+}
+
+.actions {
+  // margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+
+  & > span {
+    font-size: 16px;
+    cursor: pointer;
+  }
+}

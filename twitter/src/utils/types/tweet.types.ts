@@ -3,5 +3,6 @@ export interface ITweet {
   content: string;
   createdBy: string;
   createdAt: string;
+  likes: number;
   comments: [];
 }

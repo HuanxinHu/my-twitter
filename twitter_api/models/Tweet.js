@@ -14,6 +14,10 @@ const TweetSchema = new mongoose.Schema({
   content: {
     type: String,
   },
+  likes: {
+    type: Number,
+    min: 0,
+  },
   comments: {
     type: [
       {

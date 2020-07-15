@@ -54,7 +54,7 @@ const Profile: React.FC = () => {
       <Tabs defaultActiveKey="tweets">
         <TabPane tab="Tweets" key="tweets">
           {tweets.map((tweet) => (
-            <Tweet key={tweet.id} tweet={tweet} />
+            <Tweet key={tweet.id} tweet={tweet} userName={user.name} avatar={user.avatar} />
           ))}
         </TabPane>
         <TabPane tab="Followers" key="followers">
