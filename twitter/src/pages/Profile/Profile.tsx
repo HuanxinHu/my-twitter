@@ -51,7 +51,7 @@ const Profile: React.FC = () => {
           Edit profile
         </Button>
       </div>
-      <Tabs defaultActiveKey="tweets">
+      <Tabs defaultActiveKey="tweets" styleName="profile-tabs">
         <TabPane tab="Tweets" key="tweets">
           {tweets.map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} userName={user.name} avatar={user.avatar} />
