@@ -1,5 +1,5 @@
 import './Profile.module.less';
-import { CalendarOutlined } from '@ant-design/icons';
+import { CalendarOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { Button, Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 import Page from 'components/Page';
@@ -28,8 +28,14 @@ const Profile: React.FC = () => {
         <Avatar src={user.avatar} />
       </div>
       <div styleName="name">{user.name}</div>
-      <div styleName="join-date">
-        <CalendarOutlined /> Joined {new Date(user.createdAt).toLocaleDateString()}
+      <div styleName="bio">{user.bio}</div>
+      <div styleName="loc-date">
+        <span styleName="location">
+          <EnvironmentOutlined /> {user.location}
+        </span>
+        <span>
+          <CalendarOutlined /> Joined {new Date(user.createdAt).toLocaleDateString()}
+        </span>
       </div>
       <div styleName="brief">
         <span styleName="brief-info">

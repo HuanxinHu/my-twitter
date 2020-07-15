@@ -14,7 +14,8 @@ interface IProps {
 const EditProfileModal: React.FC<IProps> = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-
+  const [avatarChanged, setAvatarChanged] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(true);
   const [imageUrl, setImageUrl] = useState(user.avatar);
   const [form] = Form.useForm();
@@ -47,11 +48,16 @@ const EditProfileModal: React.FC<IProps> = (props) => {
 
   const handleCancle = () => setVisible(false);
   const saveProfile = () => {
-    const userData = { ...form.getFieldsValue(), avatar: imageUrl };
-    api.updateUserById(user.id, userData).then((res) => {
-      dispatch(updateUser(res.data.user));
-      setVisible(false);
-    });
+    const formValues = form.getFieldsValue();
+    const userData = avatarChanged ? { ...formValues, avatar: imageUrl } : formValues;
+    setLoading(true);
+    api
+      .updateUserById(user.id, userData)
+      .then((res) => {
+        dispatch(updateUser(res.data.user));
+        setVisible(false);
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -62,7 +68,7 @@ const EditProfileModal: React.FC<IProps> = (props) => {
       onCancel={handleCancle}
       afterClose={() => props.afterClose()}
       footer={[
-        <Button type="primary" shape="round" key="save" onClick={saveProfile}>
+        <Button type="primary" shape="round" key="save" onClick={saveProfile} loading={loading}>
           Save
         </Button>,
       ]}
@@ -75,6 +81,7 @@ const EditProfileModal: React.FC<IProps> = (props) => {
           showUploadList={false}
           customRequest={onRequest}
           beforeUpload={beforeUpload}
+          onChange={() => setAvatarChanged(true)}
         >
           <Avatar src={imageUrl} />
         </Upload>

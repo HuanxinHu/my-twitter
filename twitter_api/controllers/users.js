@@ -20,21 +20,10 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 
 exports.updateUserById = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
-  const { avatar, name, bio, location, website } = req.body;
-  const user = await User.findByIdAndUpdate(
-    id,
-    {
-      avatar,
-      name,
-      bio,
-      location,
-      website,
-    },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
+  const user = await User.findByIdAndUpdate(id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
   if (!user) {
     return next(
