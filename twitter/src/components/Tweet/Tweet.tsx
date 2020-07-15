@@ -54,9 +54,7 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, avatar }) => {
 
       <div>
         <div>
-          <span>
-            {userName} · {tweetTimeParse(tweet.createdAt)}
-          </span>
+          <span styleName="user-name">{userName}</span> · <span>{tweetTimeParse(tweet.createdAt)}</span>
           <span style={{ float: 'right' }} styleName="menu-action">
             <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
               <DownOutlined />
