@@ -51,3 +51,26 @@ exports.getTweetById = asyncHandler(async (req, res, next) => {
 
   res.status(201).json({ success: true, data: tweet.toJSON() });
 });
+
+exports.deleteTweetById = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const user = req.user;
+  const tweet = await Tweet.findById(id);
+  console.log('user ===>', user, tweet);
+
+  if (!tweet) {
+    return next(new ErrorResponse(`Tweet not found with id of ${id}`, 404));
+  }
+
+  if (tweet.createdBy != user.id) {
+    return next(
+      new ErrorResponse(
+        `You are not authroized to delete tweet with id of ${id}`,
+        404
+      )
+    );
+  }
+
+  await tweet.remove();
+  res.status(201).json({ success: true, data: tweet.toJSON() });
+});

@@ -3,15 +3,28 @@
   grid-template-columns: 50px 1fr;
   grid-template-rows: auto;
   border-bottom: 1px solid #38444d;
-  margin-bottom: 12px;
-  padding-bottom: 12px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(25, 39, 52);
+  }
+
+  & > div {
+    margin: 12px 0;
+  }
 }
 
 .tweet-content {
   margin: 6px 0;
 }
 
-.actions {
+.menu-action {
+  float: right;
+  right: 12px;
+  position: relative;
+}
+
+.panel {
   // margin-top: 12px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);

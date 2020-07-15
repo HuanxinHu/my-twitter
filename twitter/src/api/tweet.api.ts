@@ -16,7 +16,15 @@ function getTweetsByUserId(userId: string) {
   });
 }
 
+function deleteTweetById(id: string) {
+  return fetchWrap({
+    method: 'delete',
+    url: `/v1/tweets/${id}`,
+  });
+}
+
 export default {
   createTweet,
   getTweetsByUserId,
+  deleteTweetById,
 };
