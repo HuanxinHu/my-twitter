@@ -2,10 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 import { Action, combineReducers } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import {
-  useSelector as useReduxSelector,
-  TypedUseSelectorHook,
-} from 'react-redux';
+import { useSelector as useReduxSelector, TypedUseSelectorHook } from 'react-redux';
 import user from 'redux/User/user.reduces';
 
 const rootReducer = combineReducers({
@@ -22,16 +19,15 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 export type AppDispatch = typeof store.dispatch;
 
-export type AppThunk<ReturnType = void> = ThunkAction<
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
+
+export type AppThunkPromise<ReturnType = Promise<AxiosResponse<any> | void>> = ThunkAction<
   ReturnType,
   RootState,
   unknown,
   Action<string>
 >;
 
-export type AppThunkPromise<
-  ReturnType = Promise<AxiosResponse<any> | void>
-> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
-export default store;
-
 export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
+
+export default store;
