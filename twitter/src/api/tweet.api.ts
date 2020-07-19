@@ -23,8 +23,24 @@ function deleteTweetById(id: string) {
   });
 }
 
+function likeTweetById(id: string) {
+  return fetchWrap({
+    method: 'post',
+    url: `/v1/tweets/like/${id}`,
+  });
+}
+
+function unlikeTweetById(id: string) {
+  return fetchWrap({
+    method: 'post',
+    url: `/v1/tweets/unlike/${id}`,
+  });
+}
+
 export default {
   createTweet,
   getTweetsByUserId,
   deleteTweetById,
+  likeTweetById,
+  unlikeTweetById,
 };

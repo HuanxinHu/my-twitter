@@ -14,10 +14,7 @@ const TweetSchema = new mongoose.Schema({
   content: {
     type: String,
   },
-  likes: {
-    type: Number,
-    min: 0,
-  },
+  likes: [mongoose.Schema.ObjectId],
   comments: {
     type: [
       {
@@ -28,9 +25,8 @@ const TweetSchema = new mongoose.Schema({
         comment: {
           type: String,
         },
-        user: {
+        commentator: {
           type: mongoose.Schema.ObjectId,
-          ref: 'User',
         },
       },
     ],

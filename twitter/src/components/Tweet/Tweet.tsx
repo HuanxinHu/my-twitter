@@ -1,5 +1,13 @@
 import React from 'react';
-import { DeleteOutlined, MessageOutlined, HeartOutlined, RetweetOutlined, DownOutlined } from '@ant-design/icons';
+import classNames from 'classnames';
+import {
+  DeleteOutlined,
+  MessageOutlined,
+  HeartOutlined,
+  HeartFilled,
+  RetweetOutlined,
+  DownOutlined,
+} from '@ant-design/icons';
 import { ITweet } from 'utils/types/tweet.types';
 import { Dropdown, Menu, Modal } from 'antd';
 import './Tweet.module.less';
@@ -11,26 +19,12 @@ import api from 'api';
 
 interface IProps {
   tweet: ITweet;
-  userName?: string;
+  userName: string;
+  userId: string;
   avatar?: string;
 }
 
-const Tweet: React.FC<IProps> = ({ tweet, userName, avatar }) => {
-  const dispatch = useDispatch();
-  const currentYear = new Date().getFullYear().toString();
-  let [month, day, year] = new Date(tweet.createdAt).toLocaleDateString().split('/');
-  year = year === currentYear ? '' : year;
-  const createDateStr = [month, day, year].filter((item) => item).join('/');
-  const menu = (
-    <Menu>
-      <Menu.Item onClick={handleDelete}>
-        <span style={{ color: 'rgb(224, 36, 94)' }}>
-          <DeleteOutlined /> Delete
-        </span>
-      </Menu.Item>
-    </Menu>
-  );
-
+const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
   function handleDelete() {
     Modal.confirm({
       title: 'Delete Tweet?',
@@ -45,6 +39,31 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, avatar }) => {
       },
     });
   }
+
+  function handleUnlike() {
+    api.unlikeTweetById(tweet.id).then(() => {
+      dispatch(getTweetsByMe());
+    });
+  }
+
+  function handleLike() {
+    api.likeTweetById(tweet.id).then(() => {
+      dispatch(getTweetsByMe());
+    });
+  }
+
+  const menu = (
+    <Menu>
+      <Menu.Item onClick={handleDelete}>
+        <span style={{ color: 'rgb(224, 36, 94)' }}>
+          <DeleteOutlined /> Delete
+        </span>
+      </Menu.Item>
+    </Menu>
+  );
+
+  const dispatch = useDispatch();
+  const isUserLiked = tweet.likes?.includes(userId);
 
   return (
     <div styleName="tweet">
@@ -66,8 +85,9 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, avatar }) => {
           <span>
             <MessageOutlined />
           </span>
-          <span>
-            <HeartOutlined />
+          <span styleName={classNames({ liked: isUserLiked })}>
+            {isUserLiked ? <HeartFilled onClick={handleUnlike} /> : <HeartOutlined onClick={handleLike} />}{' '}
+            {tweet.likes?.length ? tweet.likes.length : null}
           </span>
           <span>
             <RetweetOutlined />

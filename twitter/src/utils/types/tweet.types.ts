@@ -1,8 +1,14 @@
+export interface IComment {
+  createdAt: string;
+  comment: string;
+  commentator: string;
+}
+
 export interface ITweet {
   id: string;
   content: string;
   createdBy: string;
   createdAt: string;
-  likes: number;
-  comments: [];
+  likes: string[];
+  comments: IComment[];
 }

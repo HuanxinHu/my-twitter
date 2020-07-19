@@ -74,3 +74,39 @@ exports.deleteTweetById = asyncHandler(async (req, res, next) => {
   await tweet.remove();
   res.status(201).json({ success: true, data: tweet.toJSON() });
 });
+
+exports.likeTweetById = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const user = req.user;
+  const tweet = await Tweet.findById(id);
+
+  if (!tweet) {
+    return next(new ErrorResponse(`Tweet not found with id of ${id}`, 404));
+  }
+
+  const findIndex = tweet.likes.indexOf(user.id);
+
+  if (findIndex === -1) {
+    tweet.likes.push(user.id);
+  }
+
+  await tweet.save();
+
+  res.status(201).json({ success: true, data: tweet.toJSON() });
+});
+
+exports.unlikeTweetById = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const user = req.user;
+  const tweet = await Tweet.findById(id);
+
+  if (!tweet) {
+    return next(new ErrorResponse(`Tweet not found with id of ${id}`, 404));
+  }
+
+  tweet.likes.pull(user.id);
+
+  await tweet.save();
+
+  res.status(201).json({ success: true, data: tweet.toJSON() });
+});
