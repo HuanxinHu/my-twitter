@@ -8,7 +8,7 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
 });
 
 exports.getUser = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.params.id).populate('blogs');
+  const user = await User.findById(req.params.id).populate('tweets');
 
   if (!user) {
     return next(
