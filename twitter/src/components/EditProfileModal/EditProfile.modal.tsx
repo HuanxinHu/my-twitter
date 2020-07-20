@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import styles from './EditProfile.module.less';
+import { Button, Form, Input, message, Modal, Upload } from 'antd';
+import api from 'api';
 import Avatar from 'components/Avatar';
-import { useSelector } from 'store';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUser } from 'redux/User/user.actions';
-import { Modal, Button, Input, Upload, message, Form } from 'antd';
-import api from 'api';
+import { useSelector } from 'store';
+
+import styles from './EditProfile.module.less';
 
 interface IProps {
   afterClose: Function;

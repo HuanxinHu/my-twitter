@@ -1,7 +1,7 @@
 import auth from './auth.api';
+import comment from './comment.api';
 import tweet from './tweet.api';
 import user from './user.api';
-import comment from './comment.api';
 
 export default {
   ...auth,

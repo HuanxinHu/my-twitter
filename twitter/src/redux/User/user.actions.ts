@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AppThunk, RootState } from 'store';
 import api from 'api';
+import { AppThunk, RootState } from 'store';
 
 export const updateUser = createAction('user/updateUser', (user) => {
   return {

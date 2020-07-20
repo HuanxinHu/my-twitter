@@ -1,14 +1,15 @@
 import './Profile.module.less';
+
 import { CalendarOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { Button, Tabs } from 'antd';
-import React, { useEffect, useState } from 'react';
+import Avatar from 'components/Avatar';
+import EditProfileModal from 'components/EditProfileModal';
 import Page from 'components/Page';
 import Tweet from 'components/Tweet';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getTweetsByMe } from 'redux/User/user.actions';
 import { useSelector } from 'store';
-import Avatar from 'components/Avatar';
-import EditProfileModal from 'components/EditProfileModal';
 
 const { TabPane } = Tabs;
 

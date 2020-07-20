@@ -1,7 +1,8 @@
 import './Page.module.less';
-import React from 'react';
+
 import { Spin } from 'antd';
 import Sidebar from 'components/Sidebar';
+import React from 'react';
 
 interface IProps {
   noSider?: boolean;

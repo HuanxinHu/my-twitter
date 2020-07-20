@@ -1,7 +1,7 @@
-import styles from "./Sidebar.module.less";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
-import React from "react";
-import { useHistory } from "react-router-dom";
+import styles from './Sidebar.module.less';
 
 interface IProps {
   title: string;
@@ -14,9 +14,9 @@ const MenuItem: React.FC<IProps> = (props) => {
   const handleClick = () => history.push(props.path);
 
   return (
-    <div className={styles["menu-item"]} onClick={handleClick}>
-      <span className={styles["menu-icon"]}>{props.icon}</span>
-      <span className={styles["menu-title"]}>{props.title}</span>
+    <div className={styles['menu-item']} onClick={handleClick}>
+      <span className={styles['menu-icon']}>{props.icon}</span>
+      <span className={styles['menu-title']}>{props.title}</span>
     </div>
   );
 };

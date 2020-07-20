@@ -1,9 +1,5 @@
 import { ITweet } from './tweet.types';
 
-export interface UserState {
-  user: User;
-}
-
 export interface User {
   name: string;
   avatar: string;

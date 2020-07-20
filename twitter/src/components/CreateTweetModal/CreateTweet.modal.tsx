@@ -1,10 +1,11 @@
+import { Button, Input, Modal } from 'antd';
+import api from 'api';
 import React, { useState } from 'react';
-import { Modal, Input, Button } from 'antd';
-import styles from './CreateTweet.module.less';
 import { useDispatch } from 'react-redux';
 import { getTweetsByMe } from 'redux/User/user.actions';
 import { useSelector } from 'store';
-import api from 'api';
+
+import styles from './CreateTweet.module.less';
 
 interface IProps {
   afterClose: Function;

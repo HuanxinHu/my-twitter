@@ -1,6 +1,7 @@
 import './Avatar.module.less';
-import React from 'react';
+
 import defaultAvatar from 'assets/images/avatar.png';
+import React from 'react';
 
 interface IProps {
   src?: string;

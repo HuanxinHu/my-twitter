@@ -1,0 +1,30 @@
+.create-comment {
+  :global {
+    .ant-modal-header,
+    .ant-modal-footer {
+      border: none;
+    }
+
+    .ant-modal-header,
+    .ant-modal-body,
+    .ant-modal-footer {
+      background-color: rgb(21, 32, 43);
+    }
+  }
+
+  textarea {
+    border: none;
+    resize: none;
+
+    &,
+    &::placeholder {
+      font-size: 16px;
+      color: #fafafa;
+      font-weight: bold;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}

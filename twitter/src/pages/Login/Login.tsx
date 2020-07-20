@@ -1,11 +1,12 @@
-import React, { Fragment } from "react";
-import "./Login.module.less";
-import { Form, Input, Button, Checkbox } from "antd";
-import logo from "assets/images/logo.png";
-import { Link, useHistory } from "react-router-dom";
-import { updateUser } from "redux/User/user.actions";
-import { useDispatch } from "react-redux";
-import api from "api";
+import './Login.module.less';
+
+import { Button, Checkbox, Form, Input } from 'antd';
+import api from 'api';
+import logo from 'assets/images/logo.png';
+import React, { Fragment } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { updateUser } from 'redux/User/user.actions';
 
 const Login: React.FC = (props) => {
   const history = useHistory();
@@ -14,7 +15,7 @@ const Login: React.FC = (props) => {
     const { email, password } = values;
     api.login({ email, password }).then((res) => {
       dispatch(updateUser(res.data.user));
-      history.push("/");
+      history.push('/');
     });
   };
 
@@ -30,29 +31,22 @@ const Login: React.FC = (props) => {
         layout="vertical"
         onFinish={onFinish}
       >
-        <Form.Item
-          name="email"
-          rules={[{ required: true, message: "Please input email!" }]}
-        >
+        <Form.Item name="email" rules={[{ required: true, message: 'Please input email!' }]}>
           <Input placeholder="Email" />
         </Form.Item>
 
-        <Form.Item
-          name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
-        >
+        <Form.Item name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
           <Input.Password placeholder="Password" />
         </Form.Item>
 
         <Form.Item name="remember" valuePropName="checked">
           <Fragment>
-            <Checkbox>Remember me</Checkbox>{" "}
-            <Button type="link">Forgot Password?</Button>
+            <Checkbox>Remember me</Checkbox> <Button type="link">Forgot Password?</Button>
           </Fragment>
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" style={{ width: "100%" }} htmlType="submit">
+          <Button type="primary" style={{ width: '100%' }} htmlType="submit">
             Login
           </Button>
         </Form.Item>

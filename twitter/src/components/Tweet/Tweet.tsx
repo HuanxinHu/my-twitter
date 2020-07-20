@@ -1,21 +1,23 @@
-import React from 'react';
-import classNames from 'classnames';
+import styles from './Tweet.module.less';
+
 import {
   DeleteOutlined,
-  MessageOutlined,
-  HeartOutlined,
-  HeartFilled,
-  RetweetOutlined,
   DownOutlined,
+  HeartFilled,
+  HeartOutlined,
+  MessageOutlined,
+  RetweetOutlined,
 } from '@ant-design/icons';
-import { ITweet } from 'utils/types/tweet.types';
 import { Dropdown, Menu, Modal } from 'antd';
-import './Tweet.module.less';
-import Avatar from 'components/Avatar';
-import { useDispatch } from 'react-redux';
-import { tweetTimeParse } from 'utils/util';
-import { getTweetsByMe } from 'redux/User/user.actions';
 import api from 'api';
+import classNames from 'classnames';
+import Avatar from 'components/Avatar';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { getTweetsByMe } from 'redux/User/user.actions';
+import { openCommentModal } from 'redux/Comment/comment.actions';
+import { ITweet } from 'utils/types/tweet.types';
+import { tweetTimeParse } from 'utils/util';
 
 interface IProps {
   tweet: ITweet;
@@ -25,6 +27,22 @@ interface IProps {
 }
 
 const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
+  const dispatch = useDispatch();
+  const isUserLiked = tweet.likes?.includes(userId);
+  const menu = (
+    <Menu>
+      <Menu.Item onClick={handleDelete}>
+        <span style={{ color: 'rgb(224, 36, 94)' }}>
+          <DeleteOutlined /> Delete
+        </span>
+      </Menu.Item>
+    </Menu>
+  );
+
+  function makeComment() {
+    dispatch(openCommentModal(tweet));
+  }
+
   function handleDelete() {
     Modal.confirm({
       title: 'Delete Tweet?',
@@ -52,45 +70,37 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
     });
   }
 
-  const menu = (
-    <Menu>
-      <Menu.Item onClick={handleDelete}>
-        <span style={{ color: 'rgb(224, 36, 94)' }}>
-          <DeleteOutlined /> Delete
-        </span>
-      </Menu.Item>
-    </Menu>
-  );
-
-  const dispatch = useDispatch();
-  const isUserLiked = tweet.likes?.includes(userId);
-
   return (
-    <div styleName="tweet">
+    <div className={styles['tweet']}>
       <div>
         <Avatar src={avatar} size="small" />{' '}
       </div>
 
       <div>
         <div>
-          <span styleName="user-name">{userName}</span> · <span>{tweetTimeParse(tweet.createdAt)}</span>
-          <span style={{ float: 'right' }} styleName="menu-action">
+          <span className={styles['user-name']}>{userName}</span> · <span>{tweetTimeParse(tweet.createdAt)}</span>
+          <span style={{ float: 'right' }} className={styles['menu-action']}>
             <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
               <DownOutlined />
             </Dropdown>
           </span>
         </div>
-        <div styleName="tweet-content">{tweet.content}</div>
-        <div styleName="panel">
+        <div className={styles['tweet-content']}>{tweet.content}</div>
+        <div className={styles['panel']}>
           <span>
-            <MessageOutlined /> {tweet.commentsCount ? tweet.commentsCount : ''}
+            <MessageOutlined className={styles['panel-icon']} onClick={makeComment} />
+            {tweet.commentsCount ? tweet.commentsCount : ''}
           </span>
           <span styleName={classNames({ liked: isUserLiked })}>
-            {isUserLiked ? <HeartFilled onClick={handleUnlike} /> : <HeartOutlined onClick={handleLike} />}{' '}
+            {isUserLiked ? (
+              <HeartFilled className={styles['panel-icon']} onClick={handleUnlike} />
+            ) : (
+              <HeartOutlined className={styles['panel-icon']} onClick={handleLike} />
+            )}
             {tweet.likes?.length ? tweet.likes.length : null}
           </span>
           <span>
-            <RetweetOutlined />
+            <RetweetOutlined className={styles['panel-icon']} />
           </span>
         </div>
       </div>

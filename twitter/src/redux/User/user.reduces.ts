@@ -1,8 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
+import Lockr from 'lockr';
+import { User } from 'utils/types/user.types';
 
 import { updateUser, updateUserTweets } from './user.actions';
-import Lockr from 'lockr';
-import { User, UserState } from 'utils/types/user.types';
+
+export interface UserState {
+  user: User;
+}
 
 const defaultState: UserState = {
   user: Lockr.get('user') || ({} as User),

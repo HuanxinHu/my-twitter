@@ -1,9 +1,9 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import Login from "pages/Login/Login";
-import Register from "pages/Register/Register";
-import Feeds from "pages/Feeds/Feeds";
-import Profile from "pages/Profile/Profile";
+import Feeds from 'pages/Feeds/Feeds';
+import Login from 'pages/Login/Login';
+import Profile from 'pages/Profile/Profile';
+import Register from 'pages/Register/Register';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 const Routes: React.FC = (props) => (
   <Switch>

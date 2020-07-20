@@ -1,31 +1,37 @@
-import styles from "./Sidebar.module.less";
+import { HomeOutlined, PlusOutlined, UserOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import logo from 'assets/images/logo.png';
+import CommentModal from 'components/CommentModal';
+import CreateTweetModal from 'components/CreateTweetModal';
+import React, { Fragment, useState } from 'react';
+import { useSelector } from 'store';
 
-import { HomeOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button } from "antd";
-import React, { Fragment, useState } from "react";
-import CreateTweetModal from "components/CreateTweetModal/CreateTweet.modal";
-import logo from "assets/images/logo.png";
-import MenuItem from "./MenuItem";
+import MenuItem from './MenuItem';
+import styles from './Sidebar.module.less';
 
 const Sidebar: React.FC = () => {
   const menu = [
     {
       icon: <HomeOutlined />,
-      title: "Home",
-      path: "/",
+      title: 'Home',
+      path: '/',
     },
     {
       icon: <UserOutlined />,
-      title: "Profile",
-      path: "/profile",
+      title: 'Profile',
+      path: '/profile',
     },
   ];
   const [tweetModalVisible, setTweetModalVisible] = useState(false);
-  const handleCreateTweet = () => setTweetModalVisible(true);
+  const commentModalVisible = useSelector((state) => state.comment.commentModalVisible);
+
+  function handleCreateTweet() {
+    setTweetModalVisible(true);
+  }
 
   return (
     <div styleName="sidebar">
-      <div className={styles["logo"]}>
+      <div className={styles['logo']}>
         <img src={logo} alt="logo" />
       </div>
       <Fragment>
@@ -33,12 +39,7 @@ const Sidebar: React.FC = () => {
           <MenuItem key={item.title} {...item} />
         ))}
       </Fragment>
-      <Button
-        type="primary"
-        styleName="twt-btn"
-        shape="round"
-        onClick={handleCreateTweet}
-      >
+      <Button type="primary" styleName="twt-btn" shape="round" onClick={handleCreateTweet}>
         Tweet
       </Button>
       <Button
@@ -55,6 +56,8 @@ const Sidebar: React.FC = () => {
           }}
         />
       )}
+
+      {commentModalVisible && <CommentModal />}
     </div>
   );
 };

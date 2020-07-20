@@ -1,4 +1,4 @@
-import { Modal, message } from 'antd';
+import { message,Modal } from 'antd';
 import axios from 'axios';
 
 const fetchWrap = (config = {}) => {

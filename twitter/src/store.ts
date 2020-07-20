@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
+import { TypedUseSelectorHook, useSelector as useReduxSelector } from 'react-redux';
 import { Action, combineReducers } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { useSelector as useReduxSelector, TypedUseSelectorHook } from 'react-redux';
 import user from 'redux/User/user.reduces';
+import comment from 'redux/Comment/comment.reduces';
 
 const rootReducer = combineReducers({
   user,
+  comment,
 });
 
 const store = configureStore({
