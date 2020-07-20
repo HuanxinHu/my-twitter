@@ -10,5 +10,6 @@ export interface ITweet {
   createdBy: string;
   createdAt: string;
   likes: string[];
-  comments: IComment[];
+  comments?: IComment[];
+  commentsCount?: number;
 }

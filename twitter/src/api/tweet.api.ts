@@ -37,10 +37,19 @@ function unlikeTweetById(id: string) {
   });
 }
 
+function commentTweetById(id: string, comment: string) {
+  return fetchWrap({
+    method: 'post',
+    url: `/v1/tweets/unlike/${id}`,
+    data: { comment },
+  });
+}
+
 export default {
   createTweet,
   getTweetsByUserId,
   deleteTweetById,
   likeTweetById,
   unlikeTweetById,
+  commentTweetById,
 };

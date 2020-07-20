@@ -83,7 +83,7 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
         <div styleName="tweet-content">{tweet.content}</div>
         <div styleName="panel">
           <span>
-            <MessageOutlined />
+            <MessageOutlined /> {tweet.commentsCount ? tweet.commentsCount : ''}
           </span>
           <span styleName={classNames({ liked: isUserLiked })}>
             {isUserLiked ? <HeartFilled onClick={handleUnlike} /> : <HeartOutlined onClick={handleLike} />}{' '}

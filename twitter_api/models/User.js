@@ -84,6 +84,13 @@ UserSchema.virtual('tweetsCount', {
   count: true,
 });
 
+UserSchema.virtual('comments', {
+  ref: 'Comment',
+  localField: '_id',
+  foreignField: 'commentator',
+  justOne: false,
+});
+
 UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next();

@@ -29,11 +29,14 @@ if (process.env.NODE_ENV === 'development') {
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 const tweets = require('./routes/tweets');
+const comments = require('./routes/comments');
 
 // Mount rourters
-app.use('/api/v1/users', users);
-app.use('/api/v1/auth', auth);
-app.use('/api/v1/tweets', tweets);
+const baseUrl = '/api/v1';
+app.use(`${baseUrl}/users`, users);
+app.use(`${baseUrl}/auth`, auth);
+app.use(`${baseUrl}/tweets`, tweets);
+app.use(`${baseUrl}/comments`, comments);
 
 // Error handler
 app.use(errorHandler);
