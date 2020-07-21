@@ -1,13 +1,12 @@
 import { Button, Input, Modal } from 'antd';
-import { useSelector } from 'store';
 import api from 'api';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getTweetsByMe } from 'redux/User/user.actions';
 import { setCommentModalVisible } from 'redux/Comment/comment.actions';
+import { getTweetsByMe } from 'redux/User/user.actions';
+import { useSelector } from 'store';
 
 import styles from './CommentModal.module.less';
-import Tweet from 'components/Tweet';
 
 interface IProps {
   afterClose?: Function;

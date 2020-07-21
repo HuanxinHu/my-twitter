@@ -1,5 +1,3 @@
-import styles from './Tweet.module.less';
-
 import {
   DeleteOutlined,
   DownOutlined,
@@ -14,10 +12,12 @@ import classNames from 'classnames';
 import Avatar from 'components/Avatar';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { getTweetsByMe } from 'redux/User/user.actions';
 import { openCommentModal } from 'redux/Comment/comment.actions';
+import { getTweetsByMe } from 'redux/User/user.actions';
 import { ITweet } from 'utils/types/tweet.types';
 import { tweetTimeParse } from 'utils/util';
+
+import styles from './Tweet.module.less';
 
 interface IProps {
   tweet: ITweet;
