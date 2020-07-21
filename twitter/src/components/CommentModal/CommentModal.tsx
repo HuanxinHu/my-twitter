@@ -7,6 +7,7 @@ import { getTweetsByMe } from 'redux/User/user.actions';
 import { setCommentModalVisible } from 'redux/Comment/comment.actions';
 
 import styles from './CommentModal.module.less';
+import Tweet from 'components/Tweet';
 
 interface IProps {
   afterClose?: Function;
@@ -32,7 +33,7 @@ const CommentModal: React.FC<IProps> = (props) => {
   }
 
   function handleReply() {
-    api.createTweet(commentForTweet.id, { content }).then(() => {
+    api.commentTweetById(commentForTweet.id, content).then(() => {
       setVisible(false);
       dispatch(getTweetsByMe());
     });
@@ -51,6 +52,7 @@ const CommentModal: React.FC<IProps> = (props) => {
         </Button>,
       ]}
     >
+      <div>{commentForTweet.content}</div>
       <Input.TextArea
         value={content}
         onChange={(e) => setContent(e.target.value)}
