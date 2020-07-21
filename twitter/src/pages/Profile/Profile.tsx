@@ -26,7 +26,7 @@ const Profile: React.FC = () => {
   return (
     <Page>
       <div styleName="avatar-contaner">
-        <Avatar src={user.avatar} />
+        <Avatar avatar={user.avatar} />
       </div>
       <div styleName="name">{user.name}</div>
       <div styleName="bio">{user.bio}</div>

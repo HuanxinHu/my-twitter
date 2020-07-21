@@ -12,10 +12,11 @@ interface IProps {
   afterClose: Function;
 }
 
+let avatarForm: FormData | null = null;
+
 const EditProfileModal: React.FC<IProps> = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-  const [avatarChanged, setAvatarChanged] = useState(false);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(true);
   const [imageUrl, setImageUrl] = useState(user.avatar);
@@ -45,20 +46,27 @@ const EditProfileModal: React.FC<IProps> = (props) => {
     getBase64(info.file, (imageUrl: string) => {
       setImageUrl(imageUrl);
     });
+
+    avatarForm = new FormData();
+    avatarForm.append('file', info.file);
   };
 
   const handleCancle = () => setVisible(false);
+
   const saveProfile = () => {
     const formValues = form.getFieldsValue();
-    const userData = avatarChanged ? { ...formValues, avatar: imageUrl } : formValues;
     setLoading(true);
     api
-      .updateUserById(user.id, userData)
+      .updateUserById(user.id, formValues)
       .then((res) => {
         dispatch(updateUser(res.data.user));
         setVisible(false);
       })
       .finally(() => setLoading(false));
+
+    if (avatarForm) {
+      api.uploadUserAvatar(user.id, avatarForm);
+    }
   };
 
   return (
@@ -82,9 +90,9 @@ const EditProfileModal: React.FC<IProps> = (props) => {
           showUploadList={false}
           customRequest={onRequest}
           beforeUpload={beforeUpload}
-          onChange={() => setAvatarChanged(true)}
+          // onChange={() => setAvatarChanged(true)}
         >
-          <Avatar src={imageUrl} />
+          <Avatar avatar={imageUrl} />
         </Upload>
       </div>
       <Form

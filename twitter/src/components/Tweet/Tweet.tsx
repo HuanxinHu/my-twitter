@@ -73,7 +73,7 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
   return (
     <div className={styles['tweet']}>
       <div>
-        <Avatar src={avatar} size="small" />{' '}
+        <Avatar avatar={avatar} size="small" />{' '}
       </div>
 
       <div>

@@ -4,7 +4,7 @@ import defaultAvatar from 'assets/images/avatar.png';
 import React from 'react';
 
 interface IProps {
-  src?: string;
+  avatar?: string;
   size?: 'default' | 'small';
 }
 
@@ -13,9 +13,12 @@ const sizeClassMap = {
   small: 'small',
 };
 
-const Avatar: React.FC<IProps> = ({ src = defaultAvatar, size = 'default' }) => {
+const Avatar: React.FC<IProps> = ({ avatar, size = 'default' }) => {
   const styleName = `avatar ${sizeClassMap[size]}`;
-  return <img src={src || defaultAvatar} alt="avatar" styleName={styleName} />;
+  const relativePath = process.env.NODE_ENV === 'production' ? 'uploads' : 'http://localhost:5001/uploads';
+  const src = avatar ? (avatar.startsWith('data:image/') ? avatar : `${relativePath}/${avatar}`) : defaultAvatar;
+
+  return <img src={src} alt="avatar" styleName={styleName} />;
 };
 
-export default Avatar;
+export default React.memo(Avatar);

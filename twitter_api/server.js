@@ -1,10 +1,12 @@
 require('colors');
+const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
+const fileUpload = require('express-fileupload');
 
 // Load config
 dotenv.config({ path: './config/config.env' });
@@ -30,6 +32,12 @@ const users = require('./routes/users');
 const auth = require('./routes/auth');
 const tweets = require('./routes/tweets');
 const comments = require('./routes/comments');
+
+// File uploading
+app.use(fileUpload());
+
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount rourters
 const baseUrl = '/api/v1';

@@ -11,6 +11,18 @@ function updateUserById(userId: string, userData: Partial<User>) {
   });
 }
 
+function uploadUserAvatar(userId: string, file: any) {
+  return fetchWrap({
+    method: 'put',
+    url: `${resource}/${userId}/avatar`,
+    data: file,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+}
+
 export default {
   updateUserById,
+  uploadUserAvatar,
 };
