@@ -14,6 +14,11 @@ const UserSchema = new mongoose.Schema(
     avatar: {
       type: String,
     },
+    username: {
+      type: String,
+      maxlength: 30,
+      unique: true,
+    },
     email: {
       type: String,
       required: [true, 'Please add an email'],

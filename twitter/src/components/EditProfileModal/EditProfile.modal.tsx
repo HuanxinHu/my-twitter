@@ -99,12 +99,25 @@ const EditProfileModal: React.FC<IProps> = (props) => {
         layout="vertical"
         form={form}
         initialValues={{
+          username: user.username,
           name: user.name,
           bio: user.bio,
           location: user.location,
           website: user.website,
         }}
       >
+        <Form.Item
+          label="User Name"
+          name="username"
+          rules={[
+            {
+              required: true,
+              message: 'Please input a username',
+            },
+          ]}
+        >
+          <Input disabled={!!user.username} />
+        </Form.Item>
         <Form.Item label="Name" name="name">
           <Input />
         </Form.Item>

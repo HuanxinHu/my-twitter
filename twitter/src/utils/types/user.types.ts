@@ -1,6 +1,7 @@
 import { ITweet } from './tweet.types';
 
 export interface User {
+  username: string;
   name: string;
   avatar: string;
   email: string;

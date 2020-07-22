@@ -2,7 +2,7 @@ const path = require('path');
 const asyncHandler = require('../middleware/asyncHandler');
 const ErrorResponse = require('../utils/errorResponse');
 const User = require('../models/User');
-const { Error } = require('mongoose');
+const { update } = require('../models/User');
 
 exports.getUsers = asyncHandler(async (req, res, next) => {
   const users = await User.find({});
@@ -22,16 +22,22 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 
 exports.updateUserById = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
-  const user = await User.findByIdAndUpdate(id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  console.log(req.body);
+  let user = await User.findById(id);
+  const updateData = { ...req.body };
 
   if (!user) {
     return next(
       new ErrorResponse(`User not fund with id of ${req.params.id}`, 404)
     );
   }
+
+  if (user.username) {
+    delete updateData.username;
+  }
+
+  Object.keys(updateData).forEach((key) => (user[key] = updateData[key]));
+  user = await user.save();
 
   res.status(200).json({ success: true, user });
 });
@@ -76,7 +82,7 @@ exports.uploadUserAvatar = asyncHandler(async (req, res, next) => {
       return next(new ErrorResponse('Faild to upload file', 500));
     }
 
-    await user.update({ avatar: file.name });
+    await user.updateOne({ avatar: file.name });
 
     res.status(200).json({ success: true, data: file.name });
   });
