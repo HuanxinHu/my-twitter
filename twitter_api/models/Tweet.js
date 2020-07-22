@@ -38,6 +38,10 @@ TweetSchema.virtual('commentsCount', {
   count: true,
 });
 
+TweetSchema.pre('remove', async function (next) {
+  await this.model('Comment').deleteMany({ commentFor: this._id });
+});
+
 TweetSchema.method('toJSON', toJSON());
 
 module.exports = mongoose.model('Tweet', TweetSchema);
