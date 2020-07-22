@@ -5,10 +5,12 @@ import { Action, combineReducers } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import user from 'redux/User/user.reduces';
 import comment from 'redux/Comment/comment.reduces';
+import tweets from 'redux/Tweets/tweets.reducers';
 
 const rootReducer = combineReducers({
   user,
   comment,
+  tweets,
 });
 
 const store = configureStore({

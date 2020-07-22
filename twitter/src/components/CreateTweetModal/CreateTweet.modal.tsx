@@ -2,9 +2,9 @@ import { Button, Input, Modal } from 'antd';
 import api from 'api';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getTweetsByMe } from 'redux/User/user.actions';
+import { getUserProfile } from 'redux/User/user.actions';
 import { useSelector } from 'store';
-
+import { splitPathname } from 'utils/util';
 import styles from './CreateTweet.module.less';
 
 interface IProps {
@@ -15,20 +15,29 @@ const CreateTweetModal: React.FC<IProps> = (props) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(true);
   const [content, setContent] = useState('');
-  const user = useSelector((state) => state.user.user);
+  const me = useSelector((state) => state.user.me);
 
-  const handleCancle = () => setVisible(false);
-
-  const handleOk = () => {
+  function handleCancle() {
     setVisible(false);
-  };
+  }
 
-  const handleTweet = () => {
-    api.createTweet(user.id, { content }).then(() => {
+  function handleAfterClose() {
+    props.afterClose();
+  }
+
+  function handleOk() {
+    setVisible(false);
+  }
+
+  function handleTweet() {
+    const { isMyProfilePath } = splitPathname();
+    api.createTweet(me.id, { content }).then(() => {
       setVisible(false);
-      dispatch(getTweetsByMe());
+      if (isMyProfilePath) {
+        dispatch(getUserProfile(me.id));
+      }
     });
-  };
+  }
 
   return (
     <Modal
@@ -36,7 +45,7 @@ const CreateTweetModal: React.FC<IProps> = (props) => {
       visible={visible}
       onCancel={handleCancle}
       onOk={handleOk}
-      afterClose={() => props.afterClose()}
+      afterClose={handleAfterClose}
       footer={[
         <Button key="ok" type="primary" shape="round" onClick={handleTweet}>
           Tweet

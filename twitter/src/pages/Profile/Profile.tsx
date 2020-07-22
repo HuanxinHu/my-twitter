@@ -3,39 +3,39 @@ import './Profile.module.less';
 import { CalendarOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { Button, Tabs } from 'antd';
 import Avatar from 'components/Avatar';
-import EditProfileModal from 'components/EditProfileModal';
 import Page from 'components/Page';
 import Tweet from 'components/Tweet';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getTweetsByMe } from 'redux/User/user.actions';
+import { setEditProfileModalVisible, getUserProfile } from 'redux/User/user.actions';
 import { useSelector } from 'store';
 
 const { TabPane } = Tabs;
 
 const Profile: React.FC = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
-  const [editModalVisible, setEditModalVisible] = useState(false);
-  const { tweets = [], followers = [], following = [] } = user;
+  const me = useSelector((state) => state.user.me);
+  const userProfile = useSelector((state) => state.user.userProfile);
+  const { tweets = [], followers = [], following = [] } = userProfile;
 
   useEffect(() => {
-    dispatch(getTweetsByMe());
-  }, [dispatch]);
+    dispatch(getUserProfile(me.id));
+  }, [dispatch, me.id]);
 
   return (
     <Page>
       <div styleName="avatar-contaner">
-        <Avatar avatar={user.avatar} />
+        <Avatar avatar={userProfile.avatar} />
       </div>
-      <div styleName="name">{user.name}</div>
-      <div styleName="bio">{user.bio}</div>
+      <div styleName="name">{userProfile.name}</div>
+      <div styleName="bio">{userProfile.bio}</div>
       <div styleName="loc-date">
         <span styleName="location">
-          <EnvironmentOutlined /> {user.location}
+          <EnvironmentOutlined /> {userProfile.location}
         </span>
         <span>
-          <CalendarOutlined /> Joined {new Date(user.createdAt).toLocaleDateString()}
+          <CalendarOutlined /> Joined{' '}
+          {userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleDateString() : ''}
         </span>
       </div>
       <div styleName="brief">
@@ -48,14 +48,20 @@ const Profile: React.FC = () => {
         <span styleName="brief-info">
           <span styleName="number">{following.length}</span> Following
         </span>
-        <Button styleName="edit-profile-btn" shape="round" onClick={() => setEditModalVisible(true)}>
+        <Button styleName="edit-profile-btn" shape="round" onClick={() => dispatch(setEditProfileModalVisible(true))}>
           Edit profile
         </Button>
       </div>
       <Tabs defaultActiveKey="tweets" styleName="profile-tabs">
         <TabPane tab="Tweets" key="tweets">
           {tweets.map((tweet) => (
-            <Tweet key={tweet.id} tweet={tweet} userName={user.name} userId={user.id} avatar={user.avatar} />
+            <Tweet
+              key={tweet.id}
+              tweet={tweet}
+              userName={userProfile.name}
+              userId={userProfile.id}
+              avatar={userProfile.avatar}
+            />
           ))}
         </TabPane>
         <TabPane tab="Followers" key="followers">
@@ -65,7 +71,6 @@ const Profile: React.FC = () => {
           Content of Tab Pane 3
         </TabPane>
       </Tabs>
-      {editModalVisible && <EditProfileModal afterClose={() => setEditModalVisible(false)} />}
     </Page>
   );
 };

@@ -13,9 +13,10 @@ import Avatar from 'components/Avatar';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { openCommentModal } from 'redux/Comment/comment.actions';
-import { getTweetsByMe } from 'redux/User/user.actions';
+import { getUserProfile } from 'redux/User/user.actions';
 import { ITweet } from 'utils/types/tweet.types';
-import { tweetTimeParse } from 'utils/util';
+import { useSelector } from 'store';
+import { tweetTimeParse, splitPathname } from 'utils/util';
 
 import styles from './Tweet.module.less';
 
@@ -28,6 +29,7 @@ interface IProps {
 
 const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
   const dispatch = useDispatch();
+  const me = useSelector((state) => state.user.me);
   const isUserLiked = tweet.likes?.includes(userId);
   const menu = (
     <Menu>
@@ -43,6 +45,13 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
     dispatch(openCommentModal(tweet));
   }
 
+  function panelActionCb() {
+    const { isMyProfilePath } = splitPathname();
+    if (isMyProfilePath) {
+      dispatch(getUserProfile(me.id));
+    }
+  }
+
   function handleDelete() {
     Modal.confirm({
       title: 'Delete Tweet?',
@@ -53,20 +62,20 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
       cancelButtonProps: { shape: 'round' },
       onOk: async () => {
         await api.deleteTweetById(tweet.id);
-        dispatch(getTweetsByMe());
+        panelActionCb();
       },
     });
   }
 
   function handleUnlike() {
     api.unlikeTweetById(tweet.id).then(() => {
-      dispatch(getTweetsByMe());
+      panelActionCb();
     });
   }
 
   function handleLike() {
     api.likeTweetById(tweet.id).then(() => {
-      dispatch(getTweetsByMe());
+      panelActionCb();
     });
   }
 

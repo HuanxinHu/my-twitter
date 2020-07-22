@@ -3,7 +3,8 @@ import api from 'api';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCommentModalVisible } from 'redux/Comment/comment.actions';
-import { getTweetsByMe } from 'redux/User/user.actions';
+import { getUserProfile } from 'redux/User/user.actions';
+import { splitPathname } from 'utils/util';
 import { useSelector } from 'store';
 
 import styles from './CommentModal.module.less';
@@ -17,6 +18,7 @@ const CommentModal: React.FC<IProps> = (props) => {
   const [visible, setVisible] = useState(true);
   const [content, setContent] = useState('');
   const commentForTweet = useSelector((state) => state.comment.commentForTweet);
+  const me = useSelector((state) => state.user.me);
 
   function handleCancle() {
     setVisible(false);
@@ -32,9 +34,12 @@ const CommentModal: React.FC<IProps> = (props) => {
   }
 
   function handleReply() {
+    const { isMyProfilePath } = splitPathname();
     api.commentTweetById(commentForTweet.id, content).then(() => {
       setVisible(false);
-      dispatch(getTweetsByMe());
+      if (isMyProfilePath) {
+        dispatch(getUserProfile(me.id));
+      }
     });
   }
 

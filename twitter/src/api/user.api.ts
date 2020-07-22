@@ -22,7 +22,14 @@ function uploadUserAvatar(userId: string, files: FormData) {
   });
 }
 
+function getUserProfile(userId: string) {
+  return fetchWrap({
+    url: `${resource}/${userId}/profile`,
+  });
+}
+
 export default {
   updateUserById,
   uploadUserAvatar,
+  getUserProfile,
 };

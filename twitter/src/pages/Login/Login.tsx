@@ -6,7 +6,7 @@ import logo from 'assets/images/logo.png';
 import React, { Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { updateUser } from 'redux/User/user.actions';
+import { updateMe } from 'redux/User/user.actions';
 
 const Login: React.FC = (props) => {
   const history = useHistory();
@@ -14,7 +14,7 @@ const Login: React.FC = (props) => {
   const onFinish = (values: any) => {
     const { email, password } = values;
     api.login({ email, password }).then((res) => {
-      dispatch(updateUser(res.data.user));
+      dispatch(updateMe(res.data.user));
       history.push('/');
     });
   };

@@ -3,32 +3,37 @@ import api from 'api';
 import Avatar from 'components/Avatar';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateUser } from 'redux/User/user.actions';
+import { setEditProfileModalVisible, updateMe } from 'redux/User/user.actions';
 import { useSelector } from 'store';
 
 import styles from './EditProfile.module.less';
 
 interface IProps {
-  afterClose: Function;
+  afterClose?: Function;
 }
 
 let avatarForm: FormData | null = null;
 
 const EditProfileModal: React.FC<IProps> = (props) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user.me);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(true);
   const [imageUrl, setImageUrl] = useState(user.avatar);
   const [form] = Form.useForm();
 
-  const getBase64 = (img: any, callback: Function) => {
+  function getBase64(img: any, callback: Function) {
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
-  };
+  }
 
-  const beforeUpload = (file: File) => {
+  function handleAfterClose() {
+    dispatch(setEditProfileModalVisible(false));
+    props.afterClose && props.afterClose();
+  }
+
+  function beforeUpload(file: File) {
     const imgTypes = ['image/jpeg', 'image/png', 'image/vnd.microsoft.icon'];
     const isValidImg = imgTypes.includes(file.type);
     if (!isValidImg) {
@@ -40,26 +45,28 @@ const EditProfileModal: React.FC<IProps> = (props) => {
       message.error('Image must smaller than 100 KB!');
     }
     return isValidImg && isInSizeLimit;
-  };
+  }
 
-  const onRequest = (info: any) => {
+  function onRequest(info: any) {
     getBase64(info.file, (imageUrl: string) => {
       setImageUrl(imageUrl);
     });
 
     avatarForm = new FormData();
     avatarForm.append('file', info.file);
-  };
+  }
 
-  const handleCancle = () => setVisible(false);
+  function handleCancle() {
+    setVisible(false);
+  }
 
-  const saveProfile = () => {
+  function saveProfile() {
     const formValues = form.getFieldsValue();
     setLoading(true);
     api
       .updateUserById(user.id, formValues)
       .then((res) => {
-        dispatch(updateUser(res.data.user));
+        dispatch(updateMe(res.data.user));
         setVisible(false);
       })
       .finally(() => setLoading(false));
@@ -67,7 +74,7 @@ const EditProfileModal: React.FC<IProps> = (props) => {
     if (avatarForm) {
       api.uploadUserAvatar(user.id, avatarForm);
     }
-  };
+  }
 
   return (
     <Modal
@@ -75,7 +82,7 @@ const EditProfileModal: React.FC<IProps> = (props) => {
       title="Edit profile"
       visible={visible}
       onCancel={handleCancle}
-      afterClose={() => props.afterClose()}
+      afterClose={handleAfterClose}
       footer={[
         <Button type="primary" shape="round" key="save" onClick={saveProfile} loading={loading}>
           Save
@@ -90,7 +97,6 @@ const EditProfileModal: React.FC<IProps> = (props) => {
           showUploadList={false}
           customRequest={onRequest}
           beforeUpload={beforeUpload}
-          // onChange={() => setAvatarChanged(true)}
         >
           <Avatar avatar={imageUrl} />
         </Upload>

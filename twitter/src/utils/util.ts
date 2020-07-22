@@ -44,3 +44,14 @@ export function formatDurationSeconds(secNum: number) {
   if (minutes) return minutes + 'm';
   if (seconds) return seconds + 's';
 }
+
+export function splitPathname(pathname: string = window.location.pathname) {
+  const paths = pathname.split('/').filter((item) => item);
+  const isMyProfilePath = paths.length === 1 && paths[0] === 'profile';
+  const isUserProfilePath = paths[0] === 'profile' && paths[1];
+  return {
+    paths,
+    isMyProfilePath,
+    isUserProfilePath,
+  };
+}

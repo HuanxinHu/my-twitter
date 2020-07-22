@@ -1,6 +1,5 @@
 import './Avatar.module.less';
 
-import defaultAvatar from 'assets/images/avatar.png';
 import React from 'react';
 
 interface IProps {
@@ -16,9 +15,13 @@ const sizeClassMap = {
 const Avatar: React.FC<IProps> = ({ avatar, size = 'default' }) => {
   const styleName = `avatar ${sizeClassMap[size]}`;
   const relativePath = process.env.NODE_ENV === 'production' ? 'uploads' : 'http://localhost:5001/uploads';
-  const src = avatar ? (avatar.startsWith('data:image/') ? avatar : `${relativePath}/${avatar}`) : defaultAvatar;
 
-  return <img src={src} alt="avatar" styleName={styleName} />;
+  if (avatar) {
+    const src = avatar.startsWith('data:image/') ? avatar : `${relativePath}/${avatar}`;
+    return <img src={src} alt="avatar" styleName={styleName} />;
+  } else {
+    return <div styleName="avatar"></div>;
+  }
 };
 
 export default React.memo(Avatar);

@@ -2,6 +2,7 @@ import { HomeOutlined, PlusOutlined, UserOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import logo from 'assets/images/logo.png';
 import CommentModal from 'components/CommentModal';
+import EditProfileModal from 'components/EditProfileModal';
 import CreateTweetModal from 'components/CreateTweetModal';
 import React, { Fragment, useState } from 'react';
 import { useSelector } from 'store';
@@ -24,6 +25,7 @@ const Sidebar: React.FC = () => {
   ];
   const [tweetModalVisible, setTweetModalVisible] = useState(false);
   const commentModalVisible = useSelector((state) => state.comment.commentModalVisible);
+  const editProfileModalVisible = useSelector((state) => state.user.editProfileModalVisible);
 
   function handleCreateTweet() {
     setTweetModalVisible(true);
@@ -58,6 +60,8 @@ const Sidebar: React.FC = () => {
       )}
 
       {commentModalVisible && <CommentModal />}
+
+      {editProfileModalVisible && <EditProfileModal />}
     </div>
   );
 };

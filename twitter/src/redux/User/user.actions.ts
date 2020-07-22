@@ -2,9 +2,9 @@ import { createAction } from '@reduxjs/toolkit';
 import api from 'api';
 import { AppThunk, RootState } from 'store';
 
-export const updateUser = createAction('user/updateUser', (user) => {
+export const updateMe = createAction('user/updateMe', (me) => {
   return {
-    payload: { user },
+    payload: { me },
   };
 });
 
@@ -14,9 +14,20 @@ export const updateUserTweets = createAction('user/updateUserTweets', (tweets) =
   };
 });
 
-export const getTweetsByMe = (): AppThunk => (dispatch, getState: () => RootState) => {
-  api.getTweetsByUserId(getState().user.user.id).then((res) => {
-    const tweets = res.data.data;
-    dispatch(updateUserTweets(tweets));
+export const setEditProfileModalVisible = createAction('user/setEditProfileModalVisible', (editProfileModalVisible) => {
+  return {
+    payload: { editProfileModalVisible },
+  };
+});
+
+export const updateUserProfile = createAction('user/updateUserProfile', (userProfile) => {
+  return {
+    payload: { userProfile },
+  };
+});
+
+export const getUserProfile = (id: string): AppThunk => (dispatch) => {
+  api.getUserProfile(id).then((res) => {
+    dispatch(updateUserProfile(res.data.data));
   });
 };

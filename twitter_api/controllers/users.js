@@ -8,8 +8,9 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: users });
 });
 
+// GET /api/v1/users/:id
 exports.getUser = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.params.id).populate('tweets');
+  const user = await User.findById(req.params.id);
 
   if (!user) {
     return next(
@@ -19,6 +20,24 @@ exports.getUser = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: user });
 });
 
+// Private GET /api/v1/users/:id/profile
+exports.getUserProfile = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.params.id).populate({
+    path: 'tweets',
+    options: { sort: { createdAt: -1 } },
+    model: 'Tweet',
+    populate: { path: 'commentsCount' },
+  });
+
+  if (!user) {
+    return next(
+      new ErrorResponse(`User not fund with id of ${req.params.id}`, 404)
+    );
+  }
+  res.status(200).json({ success: true, data: user });
+});
+
+// POST /api/v1/users/:id
 exports.updateUserById = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
   let user = await User.findById(id);
