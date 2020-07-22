@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { getUserProfile } from 'redux/User/user.actions';
 import { useSelector } from 'store';
 import { splitPathname } from 'utils/util';
+
 import styles from './CreateTweet.module.less';
 
 interface IProps {
