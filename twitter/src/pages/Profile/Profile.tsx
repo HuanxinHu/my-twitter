@@ -1,17 +1,14 @@
-import "./Profile.module.less";
+import './Profile.module.less';
 
-import { CalendarOutlined, EnvironmentOutlined } from "@ant-design/icons";
-import { Button, Tabs } from "antd";
-import Avatar from "components/Avatar";
-import Page from "components/Page";
-import Tweet from "components/Tweet";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import {
-  getUserProfile,
-  setEditProfileModalVisible,
-} from "redux/User/user.actions";
-import { useSelector } from "store";
+import { CalendarOutlined, EnvironmentOutlined } from '@ant-design/icons';
+import { Button, Tabs } from 'antd';
+import Avatar from 'components/Avatar';
+import Page from 'components/Page';
+import Tweet from 'components/Tweet';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getUserProfile, setEditProfileModalVisible } from 'redux/User/user.actions';
+import { useSelector } from 'store';
 
 const { TabPane } = Tabs;
 
@@ -31,16 +28,15 @@ const Profile: React.FC = () => {
         <Avatar avatar={userProfile.avatar} />
       </div>
       <div styleName="name">{userProfile.name}</div>
+      {userProfile.username && <div styleName="username">@{userProfile.username}</div>}
       <div styleName="bio">{userProfile.bio}</div>
       <div styleName="loc-date">
         <span styleName="location">
           <EnvironmentOutlined /> {userProfile.location}
         </span>
         <span>
-          <CalendarOutlined /> Joined{" "}
-          {userProfile.createdAt
-            ? new Date(userProfile.createdAt).toLocaleDateString()
-            : ""}
+          <CalendarOutlined /> Joined{' '}
+          {userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleDateString() : ''}
         </span>
       </div>
       <div styleName="brief">
@@ -53,11 +49,7 @@ const Profile: React.FC = () => {
         <span styleName="brief-info">
           <span styleName="number">{following.length}</span> Following
         </span>
-        <Button
-          styleName="edit-profile-btn"
-          shape="round"
-          onClick={() => dispatch(setEditProfileModalVisible(true))}
-        >
+        <Button styleName="edit-profile-btn" shape="round" onClick={() => dispatch(setEditProfileModalVisible(true))}>
           Edit profile
         </Button>
       </div>

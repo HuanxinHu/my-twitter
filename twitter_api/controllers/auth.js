@@ -22,14 +22,14 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   if (!user) {
     return next(
-      new ErrorResponse('Invalid credentials, email is not found', 401)
+      new ErrorResponse('Invalid credentials, email is not found', 400)
     );
   }
 
   const isMatch = await user.matchPassword(password);
   if (!isMatch) {
     return next(
-      new ErrorResponse('Invalid credentials, password is not correct', 401)
+      new ErrorResponse('Invalid credentials, password is not correct', 400)
     );
   }
 
