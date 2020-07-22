@@ -5,20 +5,20 @@ import {
   HeartOutlined,
   MessageOutlined,
   RetweetOutlined,
-} from "@ant-design/icons";
-import { Dropdown, Menu, Modal } from "antd";
-import api from "api";
-import classNames from "classnames";
-import Avatar from "components/Avatar";
-import React from "react";
-import { useDispatch } from "react-redux";
-import { openCommentModal } from "redux/Comment/comment.actions";
-import { getUserProfile } from "redux/User/user.actions";
-import { useSelector } from "store";
-import { ITweet } from "utils/types/tweet.types";
-import { splitPathname, tweetTimeParse } from "utils/util";
+} from '@ant-design/icons';
+import { Dropdown, Menu, Modal } from 'antd';
+import api from 'api';
+import classNames from 'classnames';
+import Avatar from 'components/Avatar';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { openCommentModal } from 'redux/Comment/comment.actions';
+import { getUserProfile } from 'redux/User/user.actions';
+import { useSelector } from 'store';
+import { ITweet } from 'utils/types/tweet.types';
+import { splitPathname, tweetTimeParse } from 'utils/util';
 
-import styles from "./Tweet.module.less";
+import styles from './Tweet.module.less';
 
 interface IProps {
   tweet: ITweet;
@@ -34,7 +34,7 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
   const menu = (
     <Menu>
       <Menu.Item onClick={handleDelete}>
-        <span style={{ color: "rgb(224, 36, 94)" }}>
+        <span style={{ color: 'rgb(224, 36, 94)' }}>
           <DeleteOutlined /> Delete
         </span>
       </Menu.Item>
@@ -54,12 +54,12 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
 
   function handleDelete() {
     Modal.confirm({
-      title: "Delete Tweet?",
+      title: 'Delete Tweet?',
       content:
-        "This can’t be undone and it will be removed from your profile, the timeline of any accounts that follow you, and from Twitter search results.",
-      okText: "Delete",
-      okButtonProps: { shape: "round", danger: true },
-      cancelButtonProps: { shape: "round" },
+        'This can’t be undone and it will be removed from your profile, the timeline of any accounts that follow you, and from Twitter search results.',
+      okText: 'Delete',
+      okButtonProps: { shape: 'round', danger: true },
+      cancelButtonProps: { shape: 'round' },
       onOk: async () => {
         await api.deleteTweetById(tweet.id);
         panelActionCb();
@@ -80,50 +80,36 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
   }
 
   return (
-    <div className={styles["tweet"]}>
+    <div className={styles['tweet']}>
       <div>
         <Avatar avatar={avatar} size="small" />
       </div>
 
       <div>
         <div>
-          <span className={styles["user-name"]}>{userName}</span> ·{" "}
-          <span>{tweetTimeParse(tweet.createdAt)}</span>
-          <span style={{ float: "right" }} className={styles["menu-action"]}>
-            <Dropdown
-              overlay={menu}
-              trigger={["click"]}
-              placement="bottomRight"
-            >
+          <span className={styles['user-name']}>{userName}</span> · <span>{tweetTimeParse(tweet.createdAt)}</span>
+          <span style={{ float: 'right' }} className={styles['menu-action']}>
+            <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
               <DownOutlined />
             </Dropdown>
           </span>
         </div>
-        <div className={styles["tweet-content"]}>{tweet.content}</div>
-        <div className={styles["panel"]}>
+        <div className={styles['tweet-content']}>{tweet.content}</div>
+        <div className={styles['panel']}>
           <span>
-            <MessageOutlined
-              className={styles["panel-icon"]}
-              onClick={makeComment}
-            />
-            {tweet.commentsCount ? tweet.commentsCount : ""}
+            <MessageOutlined className={styles['panel-icon']} onClick={makeComment} />
+            {tweet.commentsCount ? tweet.commentsCount : ''}
           </span>
           <span styleName={classNames({ liked: isUserLiked })}>
             {isUserLiked ? (
-              <HeartFilled
-                className={styles["panel-icon"]}
-                onClick={handleUnlike}
-              />
+              <HeartFilled className={styles['panel-icon']} onClick={handleUnlike} />
             ) : (
-              <HeartOutlined
-                className={styles["panel-icon"]}
-                onClick={handleLike}
-              />
+              <HeartOutlined className={styles['panel-icon']} onClick={handleLike} />
             )}
             {tweet.likes?.length ? tweet.likes.length : null}
           </span>
           <span>
-            <RetweetOutlined className={styles["panel-icon"]} />
+            <RetweetOutlined className={styles['panel-icon']} />
           </span>
         </div>
       </div>
