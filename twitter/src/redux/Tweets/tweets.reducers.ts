@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { ITweet } from 'utils/types/tweet.types';
 
-import { updateProfileTweets, updateFeedTweets } from './tweets.actions';
+import { updateFeedTweets, updateProfileTweets } from './tweets.actions';
 
 export interface TweetsState {
   profileTweets: ITweet[];

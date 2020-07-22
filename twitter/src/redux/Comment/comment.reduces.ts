@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { ITweet } from 'utils/types/tweet.types';
 
-import { setCommentModalVisible, setCommentForTweet } from './comment.actions';
+import { setCommentForTweet, setCommentModalVisible } from './comment.actions';
 
 export interface CommentState {
   commentModalVisible: boolean;

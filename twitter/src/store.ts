@@ -3,9 +3,9 @@ import { AxiosResponse } from 'axios';
 import { TypedUseSelectorHook, useSelector as useReduxSelector } from 'react-redux';
 import { Action, combineReducers } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import user from 'redux/User/user.reduces';
 import comment from 'redux/Comment/comment.reduces';
 import tweets from 'redux/Tweets/tweets.reducers';
+import user from 'redux/User/user.reduces';
 
 const rootReducer = combineReducers({
   user,

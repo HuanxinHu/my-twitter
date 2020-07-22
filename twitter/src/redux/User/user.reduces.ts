@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import Lockr from 'lockr';
 import { User } from 'utils/types/user.types';
 
-import { updateMe, setEditProfileModalVisible, updateUserProfile } from './user.actions';
+import { setEditProfileModalVisible, updateMe, updateUserProfile } from './user.actions';
 
 export interface UserState {
   me: User;
