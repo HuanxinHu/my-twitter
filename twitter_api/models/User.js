@@ -9,14 +9,13 @@ const UserSchema = new mongoose.Schema(
     name: {
       type: String,
       maxlength: 25,
-      // required: [true, 'Please add a name'],
     },
     avatar: {
       type: String,
     },
     username: {
       type: String,
-      maxlength: 30,
+      maxlength: 25,
       unique: true,
     },
     email: {

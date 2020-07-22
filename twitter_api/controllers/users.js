@@ -2,7 +2,6 @@ const path = require('path');
 const asyncHandler = require('../middleware/asyncHandler');
 const ErrorResponse = require('../utils/errorResponse');
 const User = require('../models/User');
-const { update } = require('../models/User');
 
 exports.getUsers = asyncHandler(async (req, res, next) => {
   const users = await User.find({});
@@ -22,7 +21,6 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 
 exports.updateUserById = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
-  console.log(req.body);
   let user = await User.findById(id);
   const updateData = { ...req.body };
 
@@ -37,7 +35,7 @@ exports.updateUserById = asyncHandler(async (req, res, next) => {
   }
 
   Object.keys(updateData).forEach((key) => (user[key] = updateData[key]));
-  user = await user.save();
+  user = await user.save({ validateBeforeSave: true });
 
   res.status(200).json({ success: true, user });
 });
@@ -52,8 +50,6 @@ exports.uploadUserAvatar = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`User not fund with id of ${req.params.id}`, 404)
     );
   }
-
-  console.log(req.files.file);
 
   if (!req.files) {
     return next(new ErrorResponse('Please upload a file', 404));
