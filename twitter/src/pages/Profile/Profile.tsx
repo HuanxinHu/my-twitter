@@ -5,6 +5,7 @@ import { Button, Tabs } from 'antd';
 import Avatar from 'components/Avatar';
 import Page from 'components/Page';
 import Tweet from 'components/Tweet';
+import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getUserProfile, setEditProfileModalVisible } from 'redux/User/user.actions';
@@ -38,8 +39,7 @@ const Profile: React.FC = () => {
           <EnvironmentOutlined /> {userProfile.location}
         </span>
         <span>
-          <CalendarOutlined /> Joined{' '}
-          {userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleDateString() : ''}
+          <CalendarOutlined /> Joined {userProfile.createdAt ? dayjs(userProfile.createdAt).format('MMMM YYYY') : ''}
         </span>
       </div>
       <div styleName="brief">
