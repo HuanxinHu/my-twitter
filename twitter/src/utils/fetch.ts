@@ -1,13 +1,10 @@
-import { message,Modal } from 'antd';
+import { message, Modal } from 'antd';
 import axios from 'axios';
 
 const fetchWrap = (config = {}) => {
   return axios({
     method: 'get',
-    baseURL: 'api',
-    // headers: {
-    //   Authorization: `Bearer ${getCookie('token')}`,
-    // },
+    baseURL: '/api',
     withCredentials: true, // this option will include cookie
     ...config,
   }).catch((err) => {

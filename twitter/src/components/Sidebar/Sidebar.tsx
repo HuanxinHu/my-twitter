@@ -1,34 +1,37 @@
-import { HomeOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
-import { Button } from "antd";
-import logo from "assets/images/logo.png";
-import CommentModal from "components/CommentModal";
-import CreateTweetModal from "components/CreateTweetModal";
-import EditProfileModal from "components/EditProfileModal";
-import React, { Fragment, useState } from "react";
-import { useSelector } from "store";
+import { HomeOutlined, PlusOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu } from 'antd';
+import logo from 'assets/images/logo.png';
+import Avatar from 'components/Avatar';
+import CommentModal from 'components/CommentModal';
+import CreateTweetModal from 'components/CreateTweetModal';
+import EditProfileModal from 'components/EditProfileModal';
+import React, { Fragment, useState } from 'react';
+import { useSelector } from 'store';
 
-import MenuItem from "./MenuItem";
-import styles from "./Sidebar.module.less";
+import MenuItem from './MenuItem';
+import styles from './Sidebar.module.less';
 
 const Sidebar: React.FC = () => {
+  const [tweetModalVisible, setTweetModalVisible] = useState(false);
+  const commentModalVisible = useSelector((state) => state.comment.commentModalVisible);
+  const editProfileModalVisible = useSelector((state) => state.user.editProfileModalVisible);
+  const me = useSelector((state) => state.user.me);
   const menu = [
     {
       icon: <HomeOutlined />,
-      title: "Home",
-      path: "/",
+      title: 'Home',
+      path: '/',
     },
     {
       icon: <UserOutlined />,
-      title: "Profile",
-      path: "/profile",
+      title: 'Profile',
+      path: '/profile',
     },
   ];
-  const [tweetModalVisible, setTweetModalVisible] = useState(false);
-  const commentModalVisible = useSelector(
-    (state) => state.comment.commentModalVisible
-  );
-  const editProfileModalVisible = useSelector(
-    (state) => state.user.editProfileModalVisible
+  const dropdownMenu = (
+    <Menu>
+      <Menu.Item styleName="user-menu-item">Logout @{me.username}</Menu.Item>
+    </Menu>
   );
 
   function handleCreateTweet() {
@@ -37,7 +40,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <div styleName="sidebar">
-      <div className={styles["logo"]}>
+      <div className={styles['logo']}>
         <img src={logo} alt="logo" />
       </div>
       <Fragment>
@@ -45,12 +48,7 @@ const Sidebar: React.FC = () => {
           <MenuItem key={item.title} {...item} />
         ))}
       </Fragment>
-      <Button
-        type="primary"
-        styleName="twt-btn"
-        shape="round"
-        onClick={handleCreateTweet}
-      >
+      <Button type="primary" styleName="twt-btn" shape="round" onClick={handleCreateTweet}>
         Tweet
       </Button>
       <Button
@@ -60,6 +58,21 @@ const Sidebar: React.FC = () => {
         shape="circle"
         icon={<PlusOutlined />}
       />
+
+      <div styleName="sidebar-bottom-container">
+        <Dropdown overlay={dropdownMenu} trigger={['click']}>
+          <div style={{ display: 'flex', cursor: 'pointer' }}>
+            <div styleName="avatar">
+              <Avatar avatar={me.avatar} size="small" />
+            </div>
+            <div style={{ marginLeft: 10 }} styleName="username">
+              <div styleName="username-name">{me.name}</div>
+              {me.username && <div>@{me.username}</div>}
+            </div>
+          </div>
+        </Dropdown>
+      </div>
+
       {tweetModalVisible && (
         <CreateTweetModal
           afterClose={() => {

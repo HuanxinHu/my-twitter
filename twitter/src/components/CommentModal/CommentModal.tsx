@@ -1,13 +1,13 @@
-import { Button, Input, Modal } from "antd";
-import api from "api";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setCommentModalVisible } from "redux/Comment/comment.actions";
-import { getUserProfile } from "redux/User/user.actions";
-import { useSelector } from "store";
-import { splitPathname } from "utils/util";
+import { Button, Input, Modal } from 'antd';
+import api from 'api';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setCommentModalVisible } from 'redux/Comment/comment.actions';
+import { getUserProfile } from 'redux/User/user.actions';
+import { useSelector } from 'store';
+import { splitPathname } from 'utils/util';
 
-import styles from "./CommentModal.module.less";
+import styles from './CommentModal.module.less';
 
 interface IProps {
   afterClose?: Function;
@@ -16,7 +16,7 @@ interface IProps {
 const CommentModal: React.FC<IProps> = (props) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(true);
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
   const commentForTweet = useSelector((state) => state.comment.commentForTweet);
   const me = useSelector((state) => state.user.me);
 
@@ -34,18 +34,20 @@ const CommentModal: React.FC<IProps> = (props) => {
   }
 
   function handleReply() {
-    const { isMyProfilePath } = splitPathname();
+    const { isMyProfilePath, paths } = splitPathname();
+    const username = isMyProfilePath ? me.username : paths[1];
+
     api.commentTweetById(commentForTweet.id, content).then(() => {
       setVisible(false);
       if (isMyProfilePath) {
-        dispatch(getUserProfile(me.id));
+        dispatch(getUserProfile(username));
       }
     });
   }
 
   return (
     <Modal
-      className={styles["create-comment"]}
+      className={styles['create-comment']}
       visible={visible}
       onCancel={handleCancle}
       onOk={handleOk}

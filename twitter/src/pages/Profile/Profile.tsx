@@ -9,6 +9,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getUserProfile, setEditProfileModalVisible } from 'redux/User/user.actions';
 import { useSelector } from 'store';
+import { splitPathname } from 'utils/util';
 
 const { TabPane } = Tabs;
 
@@ -17,10 +18,12 @@ const Profile: React.FC = () => {
   const me = useSelector((state) => state.user.me);
   const userProfile = useSelector((state) => state.user.userProfile);
   const { tweets = [], followers = [], following = [] } = userProfile;
+  const { isMyProfilePath, paths } = splitPathname();
+  const username = isMyProfilePath ? me.username : paths[1];
 
   useEffect(() => {
-    dispatch(getUserProfile(me.id));
-  }, [dispatch, me.id]);
+    dispatch(getUserProfile(username));
+  }, [dispatch, username]);
 
   return (
     <Page>
@@ -49,9 +52,11 @@ const Profile: React.FC = () => {
         <span styleName="brief-info">
           <span styleName="number">{following.length}</span> Following
         </span>
-        <Button styleName="edit-profile-btn" shape="round" onClick={() => dispatch(setEditProfileModalVisible(true))}>
-          Edit profile
-        </Button>
+        {isMyProfilePath && (
+          <Button styleName="edit-profile-btn" shape="round" onClick={() => dispatch(setEditProfileModalVisible(true))}>
+            Edit profile
+          </Button>
+        )}
       </div>
       <Tabs defaultActiveKey="tweets" styleName="profile-tabs">
         <TabPane tab="Tweets" key="tweets">
@@ -59,9 +64,7 @@ const Profile: React.FC = () => {
             <Tweet
               key={tweet.id}
               tweet={tweet}
-              userName={userProfile.name}
-              userId={userProfile.id}
-              avatar={userProfile.avatar}
+              tweetOwner={{ name: userProfile.name, id: userProfile.id, avatar: userProfile.avatar }}
             />
           ))}
         </TabPane>

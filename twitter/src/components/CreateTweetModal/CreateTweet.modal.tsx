@@ -35,7 +35,7 @@ const CreateTweetModal: React.FC<IProps> = (props) => {
     api.createTweet(me.id, { content }).then(() => {
       setVisible(false);
       if (isMyProfilePath) {
-        dispatch(getUserProfile(me.id));
+        dispatch(getUserProfile(me.username));
       }
     });
   }

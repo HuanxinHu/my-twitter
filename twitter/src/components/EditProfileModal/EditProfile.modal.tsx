@@ -3,8 +3,9 @@ import api from 'api';
 import Avatar from 'components/Avatar';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setEditProfileModalVisible, updateMe } from 'redux/User/user.actions';
+import { getUserProfile, setEditProfileModalVisible, updateMe } from 'redux/User/user.actions';
 import { useSelector } from 'store';
+import { splitPathname } from 'utils/util';
 
 import styles from './EditProfile.module.less';
 
@@ -16,10 +17,10 @@ let avatarForm: FormData | null = null;
 
 const EditProfileModal: React.FC<IProps> = (props) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.me);
+  const me = useSelector((state) => state.user.me);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(true);
-  const [imageUrl, setImageUrl] = useState(user.avatar);
+  const [imageUrl, setImageUrl] = useState(me.avatar);
   const [form] = Form.useForm();
 
   function getBase64(img: any, callback: Function) {
@@ -62,17 +63,20 @@ const EditProfileModal: React.FC<IProps> = (props) => {
 
   function saveProfile() {
     const formValues = form.getFieldsValue();
+    const { isMyProfilePath } = splitPathname();
+
     setLoading(true);
     api
-      .updateUserById(user.id, formValues)
+      .updateUserById(me.id, formValues)
       .then((res) => {
         dispatch(updateMe(res.data.user));
+        isMyProfilePath && dispatch(getUserProfile(me.username));
         setVisible(false);
       })
       .finally(() => setLoading(false));
 
     if (avatarForm) {
-      api.uploadUserAvatar(user.id, avatarForm);
+      api.uploadUserAvatar(me.id, avatarForm);
     }
   }
 
@@ -105,11 +109,11 @@ const EditProfileModal: React.FC<IProps> = (props) => {
         layout="vertical"
         form={form}
         initialValues={{
-          username: user.username,
-          name: user.name,
-          bio: user.bio,
-          location: user.location,
-          website: user.website,
+          username: me.username,
+          name: me.name,
+          bio: me.bio,
+          location: me.location,
+          website: me.website,
         }}
       >
         <Form.Item
@@ -122,7 +126,7 @@ const EditProfileModal: React.FC<IProps> = (props) => {
             },
           ]}
         >
-          <Input disabled={!!user.username} />
+          <Input disabled={!!me.username} />
         </Form.Item>
         <Form.Item label="Name" name="name">
           <Input />

@@ -22,7 +22,7 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 
 // Private GET /api/v1/users/:id/profile
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.params.id).populate({
+  const user = await User.findOne({ username: req.params.username }).populate({
     path: 'tweets',
     options: { sort: { createdAt: -1 } },
     model: 'Tweet',

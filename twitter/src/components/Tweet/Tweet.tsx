@@ -22,15 +22,18 @@ import styles from './Tweet.module.less';
 
 interface IProps {
   tweet: ITweet;
-  userName: string;
-  userId: string;
-  avatar?: string;
+  tweetOwner: {
+    name: string;
+    id: string;
+    avatar: string;
+  };
 }
 
-const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
+const Tweet: React.FC<IProps> = ({ tweet, tweetOwner }) => {
   const dispatch = useDispatch();
   const me = useSelector((state) => state.user.me);
-  const isUserLiked = tweet.likes?.includes(userId);
+  const isMyTweet = me.id === tweetOwner.id;
+  const isMeLiked = tweet.likes?.includes(me.id);
   const menu = (
     <Menu>
       <Menu.Item onClick={handleDelete}>
@@ -46,9 +49,10 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
   }
 
   function panelActionCb() {
-    const { isMyProfilePath } = splitPathname();
-    if (isMyProfilePath) {
-      dispatch(getUserProfile(me.id));
+    const { paths } = splitPathname();
+    if (paths[0] === 'profile') {
+      const username = paths[1] ? paths[1] : me.username;
+      dispatch(getUserProfile(username));
     }
   }
 
@@ -82,17 +86,20 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
   return (
     <div className={styles['tweet']}>
       <div>
-        <Avatar avatar={avatar} size="small" />
+        <Avatar avatar={tweetOwner.avatar} size="small" />
       </div>
 
       <div>
         <div>
-          <span className={styles['user-name']}>{userName}</span> · <span>{tweetTimeParse(tweet.createdAt)}</span>
-          <span style={{ float: 'right' }} className={styles['menu-action']}>
-            <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-              <DownOutlined />
-            </Dropdown>
-          </span>
+          <span className={styles['user-name']}>{tweetOwner.name}</span> ·{' '}
+          <span>{tweetTimeParse(tweet.createdAt)}</span>
+          {isMyTweet && (
+            <span style={{ float: 'right' }} className={styles['menu-action']}>
+              <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+                <DownOutlined />
+              </Dropdown>
+            </span>
+          )}
         </div>
         <div className={styles['tweet-content']}>{tweet.content}</div>
         <div className={styles['panel']}>
@@ -100,8 +107,8 @@ const Tweet: React.FC<IProps> = ({ tweet, userName, userId, avatar }) => {
             <MessageOutlined className={styles['panel-icon']} onClick={makeComment} />
             {tweet.commentsCount ? tweet.commentsCount : ''}
           </span>
-          <span styleName={classNames({ liked: isUserLiked })}>
-            {isUserLiked ? (
+          <span styleName={classNames({ liked: isMeLiked })}>
+            {isMeLiked ? (
               <HeartFilled className={styles['panel-icon']} onClick={handleUnlike} />
             ) : (
               <HeartOutlined className={styles['panel-icon']} onClick={handleLike} />

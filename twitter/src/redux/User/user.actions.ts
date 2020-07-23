@@ -26,8 +26,8 @@ export const updateUserProfile = createAction('user/updateUserProfile', (userPro
   };
 });
 
-export const getUserProfile = (id: string): AppThunk => (dispatch) => {
-  api.getUserProfile(id).then((res) => {
+export const getUserProfile = (username: string): AppThunk => (dispatch) => {
+  api.getUserProfile(username).then((res) => {
     dispatch(updateUserProfile(res.data.data));
   });
 };
