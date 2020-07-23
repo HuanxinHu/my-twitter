@@ -52,7 +52,7 @@ const Profile: React.FC = () => {
         <span styleName="brief-info">
           <span styleName="number">{following.length}</span> Following
         </span>
-        {isMyProfilePath && (
+        {(isMyProfilePath || paths[1] === me.username) && (
           <Button styleName="edit-profile-btn" shape="round" onClick={() => dispatch(setEditProfileModalVisible(true))}>
             Edit profile
           </Button>
