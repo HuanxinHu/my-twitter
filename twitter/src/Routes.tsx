@@ -16,6 +16,9 @@ const Routes: React.FC = (props) => (
     <Route exact path="/profile">
       <Profile />
     </Route>
+    <Route exact path="/profile/:username">
+      <Profile />
+    </Route>
     <Route path="/">
       <Feeds />
     </Route>
