@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export function getCookie(cname: string) {
   var name = cname + '=';
   var decodedCookie = decodeURIComponent(document.cookie);
@@ -21,7 +23,7 @@ export function setCookie(cname: string, cvalue: string | boolean | number, exda
   document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
 }
 
-export function tweetTimeParse(createdAt: string) {
+export function gapTimeParser(createdAt: string) {
   const currentTime = new Date().getTime();
   const createdTime = new Date(createdAt).getTime();
   const delta = currentTime - createdTime;
@@ -33,6 +35,10 @@ export function tweetTimeParse(createdAt: string) {
   year = year === currentYear ? '' : year;
 
   return [month, day, year].filter((item) => item).join('/');
+}
+
+export function tweetDetailTimeParse(createdAt: string) {
+  return dayjs(createdAt).format('h:mm A · MMM DD, YYYY');
 }
 
 export function formatDurationSeconds(secNum: number) {

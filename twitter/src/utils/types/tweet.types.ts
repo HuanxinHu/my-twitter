@@ -1,6 +1,7 @@
 export interface IComment {
+  id: string;
   createdAt: string;
-  comment: string;
+  content: string;
   commentator: string;
 }
 

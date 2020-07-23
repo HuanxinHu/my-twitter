@@ -1,31 +1,26 @@
-import "./Avatar.module.less";
+import './Avatar.module.less';
 
-import React from "react";
+import React from 'react';
 
 interface IProps {
   avatar?: string;
-  size?: "default" | "small";
+  size?: 'default' | 'small';
 }
 
 const sizeClassMap = {
-  default: "",
-  small: "small",
+  default: '',
+  small: 'small',
 };
 
-const Avatar: React.FC<IProps> = ({ avatar, size = "default" }) => {
+const Avatar: React.FC<IProps> = ({ avatar, size = 'default' }) => {
   const styleName = `avatar ${sizeClassMap[size]}`;
-  const relativePath =
-    process.env.NODE_ENV === "production"
-      ? "uploads"
-      : "http://localhost:5001/uploads";
+  const relativePath = process.env.NODE_ENV === 'production' ? 'uploads' : 'http://localhost:5001/uploads';
 
   if (avatar) {
-    const src = avatar.startsWith("data:image/")
-      ? avatar
-      : `${relativePath}/${avatar}`;
+    const src = avatar.startsWith('data:image/') ? avatar : `${relativePath}/${avatar}`;
     return <img src={src} alt="avatar" styleName={styleName} />;
   } else {
-    return <div styleName="avatar" />;
+    return <div styleName={styleName} />;
   }
 };
 

@@ -12,11 +12,12 @@ import classNames from 'classnames';
 import Avatar from 'components/Avatar';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { openCommentModal } from 'redux/Comment/comment.actions';
 import { getUserProfile } from 'redux/User/user.actions';
 import { useSelector } from 'store';
 import { ITweet } from 'utils/types/tweet.types';
-import { splitPathname, tweetTimeParse } from 'utils/util';
+import { gapTimeParser, splitPathname } from 'utils/util';
 
 import styles from './Tweet.module.less';
 
@@ -24,6 +25,7 @@ interface IProps {
   tweet: ITweet;
   tweetOwner: {
     name: string;
+    username: string;
     id: string;
     avatar: string;
   };
@@ -32,6 +34,7 @@ interface IProps {
 const Tweet: React.FC<IProps> = ({ tweet, tweetOwner }) => {
   const dispatch = useDispatch();
   const me = useSelector((state) => state.user.me);
+  const history = useHistory();
   const isMyTweet = me.id === tweetOwner.id;
   const isMeLiked = tweet.likes?.includes(me.id);
   const menu = (
@@ -44,7 +47,8 @@ const Tweet: React.FC<IProps> = ({ tweet, tweetOwner }) => {
     </Menu>
   );
 
-  function makeComment() {
+  function makeComment(e: React.MouseEvent) {
+    e.stopPropagation();
     dispatch(openCommentModal(tweet));
   }
 
@@ -71,30 +75,42 @@ const Tweet: React.FC<IProps> = ({ tweet, tweetOwner }) => {
     });
   }
 
-  function handleUnlike() {
+  function handleUnlike(e: React.MouseEvent) {
+    e.stopPropagation();
     api.unlikeTweetById(tweet.id).then(() => {
       panelActionCb();
     });
   }
 
-  function handleLike() {
+  function handleLike(e: React.MouseEvent) {
+    e.stopPropagation();
     api.likeTweetById(tweet.id).then(() => {
       panelActionCb();
     });
   }
 
+  function handleToTweetDetail() {
+    console.log('e handleToTweetDetail ===>');
+    history.push(`/tweet/${tweet.id}`);
+  }
+
+  function handleToUserProfile(e: React.MouseEvent) {
+    e.stopPropagation();
+    history.push(`/profile/${tweetOwner.username}`);
+  }
+
   return (
-    <div className={styles['tweet']}>
-      <div>
+    <div className={styles['tweet']} onClick={handleToTweetDetail}>
+      <div styleName="avatar-container" onClick={handleToUserProfile}>
         <Avatar avatar={tweetOwner.avatar} size="small" />
       </div>
 
       <div>
         <div>
-          <span className={styles['user-name']}>{tweetOwner.name}</span> ·{' '}
-          <span>{tweetTimeParse(tweet.createdAt)}</span>
+          <span className={styles['name']}>{tweetOwner.name}</span>
+          <span>@{tweetOwner.username}</span> · <span>{gapTimeParser(tweet.createdAt)}</span>
           {isMyTweet && (
-            <span style={{ float: 'right' }} className={styles['menu-action']}>
+            <span style={{ float: 'right' }} className={styles['menu-action']} onClick={(e) => e.stopPropagation()}>
               <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
                 <DownOutlined />
               </Dropdown>

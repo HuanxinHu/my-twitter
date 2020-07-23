@@ -15,8 +15,17 @@
   }
 }
 
+.avatar-container {
+  &:hover {
+    opacity: 0.7;
+    transition: opacity 0.6s;
+  }
+}
+
 .tweet-content {
   margin: 6px 0;
+  color: #fff;
+  font-weight: bold;
   white-space: pre-wrap;
 }
 
@@ -26,9 +35,10 @@
   position: relative;
 }
 
-.user-name {
+.name {
   color: #fff;
   font-weight: bold;
+  margin-right: 6px;
 }
 
 .panel {

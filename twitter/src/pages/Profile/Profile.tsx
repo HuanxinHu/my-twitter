@@ -64,7 +64,12 @@ const Profile: React.FC = () => {
             <Tweet
               key={tweet.id}
               tweet={tweet}
-              tweetOwner={{ name: userProfile.name, id: userProfile.id, avatar: userProfile.avatar }}
+              tweetOwner={{
+                name: userProfile.name,
+                id: userProfile.id,
+                avatar: userProfile.avatar,
+                username: userProfile.username,
+              }}
             />
           ))}
         </TabPane>

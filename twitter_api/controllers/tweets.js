@@ -51,6 +51,31 @@ exports.getTweetById = asyncHandler(async (req, res, next) => {
   res.status(201).json({ success: true, data: tweet });
 });
 
+// GET /api/v1/tweets/:id
+exports.getTweetById = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const tweet = await Tweet.findById(id).populate({
+    path: 'comments',
+    options: { sort: { createdAt: -1 } },
+  });
+
+  if (!tweet) {
+    return next(new ErrorResponse(`Tweet not found with id of ${id}`, 404));
+  }
+
+  const userIds = [
+    ...new Set([
+      tweet.createdBy,
+      ...tweet.comments.map((comment) => comment.commentator),
+    ]),
+  ];
+  const usersInfo = await User.find({ _id: userIds }).select(
+    'id name username avatar'
+  );
+
+  res.status(201).json({ success: true, data: { tweet, usersInfo } });
+});
+
 exports.deleteTweetById = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
   const user = req.user;

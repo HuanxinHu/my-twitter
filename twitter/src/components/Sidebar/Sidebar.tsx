@@ -60,7 +60,7 @@ const Sidebar: React.FC = () => {
       />
 
       <div styleName="sidebar-bottom-container">
-        <Dropdown overlay={dropdownMenu} trigger={['click']}>
+        <Dropdown overlay={dropdownMenu} trigger={['click']} arrow>
           <div style={{ display: 'flex', cursor: 'pointer' }}>
             <div styleName="avatar">
               <Avatar avatar={me.avatar} size="small" />
