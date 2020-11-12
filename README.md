@@ -14,7 +14,7 @@ npm i
 yarn start
 ```
 
-in the twitter_api fikder
+in the twitter_api folder
 
 ```bash
 # run this bash first time or when new packge is added
@@ -24,12 +24,7 @@ npm i
 npm run dev
 ```
 
-## Route Structure
+## Login Page
 
-/api/v1/users
-
-## Database GUI
-
-#### MongoDB Compass
-
-connect config in config.env MONGO_URI
+=====
+![image](https://github.com/HuanxinHu/my-twitter/blob/master/screenshots/login.png)
