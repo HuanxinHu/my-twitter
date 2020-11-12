@@ -26,5 +26,4 @@ npm run dev
 
 ## Login Page
 
-=====
 ![image](https://github.com/HuanxinHu/my-twitter/blob/master/screenshots/login.png)
