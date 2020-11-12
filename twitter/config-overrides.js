@@ -1,10 +1,4 @@
-const {
-  override,
-  addBabelPlugins,
-  fixBabelImports,
-  addLessLoader,
-  addWebpackResolve,
-} = require('customize-cra');
+const { override, addBabelPlugins, fixBabelImports, addLessLoader } = require('customize-cra');
 
 module.exports = override(
   ...addBabelPlugins([
