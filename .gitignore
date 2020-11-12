@@ -104,3 +104,5 @@ dist
 .tern-port
 
 public
+
+twitter_api/config/config.env
