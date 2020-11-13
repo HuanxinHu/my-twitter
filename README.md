@@ -1,12 +1,17 @@
 ## my-twitter
 
-JavaScript Full Stack Project
+#### JavaScript Full Stack Project
+
+Front end use React, TypeScript
+Bacend use NodeJS, Express
+Database use cloud MongoDB
 
 #### Functions Done
 
 - [x] Login
 - [x] Register user
 - [x] Create/Edit Profile
+- [x] Create a tweet
 - [x] Comment a tweet
 - [x] Like a tweet
 - [x] Delete a tweet
