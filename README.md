@@ -2,6 +2,19 @@
 
 JavaScript Full Stack Project
 
+#### Functions Done
+
+- [x] Login
+- [x] Register user
+- [x] Create/Edit Profile
+- [x] Comment a tweet
+- [x] Like a tweet
+- [x] Delete a tweet
+- [ ] Re-Tweet
+- [ ] Feeds page
+- [ ] Followers/Following
+- [ ] Deploy the project
+
 ## For dev
 
 in the twitter folder
