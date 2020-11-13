@@ -27,3 +27,27 @@ npm run dev
 ## Login Page
 
 ![image](https://github.com/HuanxinHu/my-twitter/blob/master/screenshots/login.png)
+
+## Register Page
+
+![image](https://github.com/HuanxinHu/my-twitter/blob/master/screenshots/register.png)
+
+## Profile Page
+
+![image](https://github.com/HuanxinHu/my-twitter/blob/master/screenshots/profile.png)
+
+## Edit Profile function
+
+![image](https://github.com/HuanxinHu/my-twitter/blob/master/screenshots/edit-profile.png)
+
+## Add Tweet
+
+![image](https://github.com/HuanxinHu/my-twitter/blob/master/screenshots/add-tweet.png)
+
+## Comment Tweet
+
+![image](https://github.com/HuanxinHu/my-twitter/blob/master/screenshots/make-comment.png)
+
+## Tweet Detail
+
+![image](https://github.com/HuanxinHu/my-twitter/blob/master/screenshots/tweet-detail.png)
